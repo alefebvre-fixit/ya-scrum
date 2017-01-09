@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { Sprint, Story, Conversation, Message } from '../models/index';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2';
+import { Sprint, Story } from '../models/index';
+import { AngularFireDatabase } from 'angularfire2';
 
 const SPRINTS = '/sprints';
-const SPRINT_CONVERSATIONS = '/sprint-conversations';
-
 
 @Injectable()
 export class SprintService {

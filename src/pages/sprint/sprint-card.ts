@@ -3,7 +3,6 @@ import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { ModalController, NavController } from 'ionic-angular';
 
 import { Sprint } from '../../models/index';
-import { SprintViewPage } from './sprint-view';
 
 @Component({
   selector: 'sprint-card',

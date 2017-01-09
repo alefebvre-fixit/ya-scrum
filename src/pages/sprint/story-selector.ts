@@ -26,19 +26,21 @@ export class StorySelectorPage {
   }
 
   ngOnInit(): void {
+    /*
     this.sprintId = this.params.get("sprintId");
     this.storyService.findAllStories().subscribe((stories: Story[]) => {
       this.stories = stories;
     });
+    */
   }
 
-  dismiss() {
+  close() {
     this.viewCtrl.dismiss();
   }
 
   assignToSprint(story: Story){
     this.sprintService.assignToSprint(this.sprintId, story.$key);
-    this.dismiss();
+    this.close();
   }
 
 

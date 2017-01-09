@@ -3,7 +3,6 @@ import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { ModalController, NavController } from 'ionic-angular';
 
 import { Story } from '../../models/index';
-import { StoryViewPage } from './story-view';
 
 @Component({
   selector: 'story-card',

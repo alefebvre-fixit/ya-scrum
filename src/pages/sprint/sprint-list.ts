@@ -6,7 +6,6 @@ import { SprintService } from '../../services/index';
 import { Sprint } from '../../models/index';
 import { SprintEditPage } from './sprint-edit';
 import { SprintViewPage } from './sprint-view';
-import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'sprint-list',
