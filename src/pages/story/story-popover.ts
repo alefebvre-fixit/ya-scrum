@@ -45,7 +45,7 @@ export class StoryPopoverPage {
 
   presentToast() {
     let toast = this.toastCtrl.create({
-      message: 'Story has been un-assigned successfully',
+      message: 'Story un-assigned successfully',
       duration: 3000
     });
     toast.present();

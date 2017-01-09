@@ -46,10 +46,10 @@ export class SprintPopoverPage {
       let selectorModal = this.modalCtrl.create(StorySelectorPage, { sprintId: sprint.$key });
       this.close();
       selectorModal.present();
+    } else {
+      this.close();
     }
-    
 
-    this.close();
   }
 
 }

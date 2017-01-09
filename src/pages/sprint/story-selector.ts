@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavParams, ViewController } from 'ionic-angular';
+import { ToastController } from 'ionic-angular';
+
 import { StoryService } from '../../services/index';
 import { SprintService } from '../../services/index';
 
@@ -21,17 +23,16 @@ export class StorySelectorPage {
     public storyService: StoryService,
     public sprintService: SprintService,
     public viewCtrl: ViewController,
+    private toastCtrl: ToastController,
     private params: NavParams
   ) {
   }
 
   ngOnInit(): void {
-    /*
     this.sprintId = this.params.get("sprintId");
     this.storyService.findAllStories().subscribe((stories: Story[]) => {
       this.stories = stories;
     });
-    */
   }
 
   close() {
@@ -39,8 +40,17 @@ export class StorySelectorPage {
   }
 
   assignToSprint(story: Story){
-    this.sprintService.assignToSprint(this.sprintId, story.$key);
     this.close();
+    this.sprintService.assignToSprint(this.sprintId, story.$key);
+    this.presentToast();
+  }
+
+  presentToast() {
+    let toast = this.toastCtrl.create({
+      message: 'Story un-assigned successfully',
+      duration: 3000
+    });
+    toast.present();
   }
 
 
