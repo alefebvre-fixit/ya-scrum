@@ -1,0 +1,75 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>
+			{{(sprint)?.name}}
+		</ion-title>
+		<button ion-button clear small color="default" icon-left (click)="openConversation(sprint.$key)">
+          messages
+        </button>
+		<ion-buttons end>
+			<button ion-button (click)="presentPopover($event)">
+				<ion-icon name="more"></ion-icon>
+			</button>
+		</ion-buttons>
+
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+
+	<div class="sprint-module">
+		<img src="assets/img/themes/sprint-large.jpg" class="image-overlay" />
+		<header>
+			<h3>
+				{{(sprint)?.name}}
+			</h3>
+			<h5>
+				#something
+			</h5>
+		</header>
+		<ion-icon name="sync" class="sprint-icon"></ion-icon>
+		<div class="sprint-status">
+			{{(sprint)?.status}}
+		</div>
+	</div>
+	<ion-grid>
+		<ion-row>
+			<ion-col width-33 style="background-color: white">
+				<p class="statistic">
+					<b>{{stories?.length}}</b>
+					<br>
+					<p class="statistic-label">Stories</p>
+			</ion-col>
+			<ion-col width-33>
+				<p class="statistic">
+					<b>4</b>
+					<br>
+					<p class="statistic-label">Contributors</p>
+			</ion-col>
+			<ion-col width-33>
+				<p class="statistic">
+					<b>12</b>
+					<br>
+					<p class="statistic-label">Followers</p>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				{{(sprint)?.description}}
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col class="contributors">
+				<ya-avatar [username]="'b'"></ya-avatar>
+				<ya-avatar [username]="'f'"></ya-avatar>
+				<ya-avatar [username]="'n'"></ya-avatar>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+	<ion-list>
+		<ion-list-header>
+			Sprint Backlog
+		</ion-list-header>
+	</ion-list>
+	<story-card [stories]="stories" [config]="cardConfig" (rightClick)="navigateToDetails($event)"></story-card>
+</ion-content>

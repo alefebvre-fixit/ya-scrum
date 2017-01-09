@@ -1,0 +1,21 @@
+<ion-header>
+	<ion-navbar>
+
+		<ion-title>
+			Stories
+		</ion-title>
+
+		<ion-buttons end>
+			<button ion-button icon-only (click)="add()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+		</ion-buttons>
+
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+
+	<story-card [stories]="stories" [config]="cardConfig" (rightClick)="assignToSprint($event)" ></story-card>
+
+</ion-content>

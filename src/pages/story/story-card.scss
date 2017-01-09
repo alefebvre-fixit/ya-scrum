@@ -1,0 +1,62 @@
+.card-background-page {
+    
+.story-status {
+  position: absolute;
+  font-size: 100%;
+  color: white;
+  padding: 4px 8px 4px 8px;
+  border: 1px solid white ;
+  bottom: 60px;
+  right: 10px;
+  border-radius: 5px;
+}
+
+.story-icon {
+  position: absolute;
+  top: 12px;
+  left: 15px;
+  font-size: 40px;
+  color: white;
+}
+
+.story-card{
+  padding: 0px 16px 0px 16px;
+  
+}
+.story-card > header {
+  position: absolute;
+  top: 20px;
+  left: 60px;
+  width: 100%;
+  text-align: left;
+}
+.story-card > header > h3  {
+  margin: 0;
+  color: white;
+  text-shadow: 0 1px 0 black;
+  font-size: 150%;
+}
+.story-card > header > h5  {
+  margin: 0;
+  color: white;
+  text-shadow: 0 1px 0 black;
+  font-size: 100%;
+}
+
+.overlay {
+    background: linear-gradient(
+                    to top,
+                    rgba(0, 0, 0, 0),
+                    rgba(0, 0, 0, 0.4)
+    );
+    background-blend-mode: screen;    
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right:0;
+    top:0;
+    z-index: auto;
+}
+
+
+}

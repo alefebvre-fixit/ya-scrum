@@ -1,0 +1,37 @@
+<div class="card-background-page">
+	<ion-card *ngFor="let story of stories;">
+		<img src="assets/img/themes/blueprint-large.jpg" />
+		<div class="overlay"></div>
+		<ion-card-content class="story-card">
+			<header>
+				<h3>
+					{{(story)?.name}}
+				</h3>
+				<h5 [hidden]="!sprint">
+					@{{(story)?.name}}
+				</h5>
+				<h5>
+					#{{(story)?.type}}
+				</h5>
+			</header>
+			<ion-icon name="cog" class="story-icon"></ion-icon>
+			<div class="story-status">
+				{{(story)?.status}}
+			</div>
+		</ion-card-content>
+
+		<ion-row no-padding>
+			<ion-col text-left>
+
+			</ion-col>
+			<ion-col text-center>
+			</ion-col>
+			<ion-col text-right>
+				<button ion-button clear small color="default" icon-left (click)="emitRightClick(story)" [hidden]="!config.right">
+					{{config.right}}
+				</button>
+			</ion-col>
+		</ion-row>
+
+	</ion-card>
+</div>

@@ -1,0 +1,67 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>
+            {{(story)?.name}}
+		</ion-title>
+	<ion-buttons end>
+		<button ion-button (click)="presentPopover($event)">
+			<ion-icon name="more"></ion-icon>
+		</button>
+    </ion-buttons>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<div class="sprint-module">
+		<img src="assets/img/themes/blueprint-large.jpg" class="image-overlay" />
+		<header>
+			<h3>
+                {{(story)?.name}}
+			</h3>
+			<h5 [hidden]="!sprint">
+				@{{(sprint)?.name}}
+			</h5>
+			<h5>
+				#{{(story)?.type}}
+			</h5>
+		</header>
+		<ion-icon name="cog" class="story-icon"></ion-icon>
+		<div class="story-status">
+			{{(story)?.status}}
+		</div>
+	</div>
+	<ion-grid>
+		<ion-row>
+			<ion-col width-33 style="background-color: white">
+				<p class="statistic">
+					<b>{{story?.priority}}</b>
+					<br>
+					<p class="statistic-label">Priority</p>
+			</ion-col>
+			<ion-col width-33>
+				<p class="statistic">
+					<b>{{story?.size}}</b>
+					<br>
+					<p class="statistic-label">Size</p>
+			</ion-col>
+			<ion-col width-33>
+				<p class="statistic">
+					<b>12</b>
+					<br>
+					<p class="statistic-label">Comments</p>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+                {{(story)?.description}}
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+                {{(story)?.comment}}
+			</ion-col>
+		</ion-row>
+
+	</ion-grid>
+
+</ion-content>
