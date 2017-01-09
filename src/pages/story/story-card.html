@@ -18,13 +18,21 @@
 			<div class="story-status">
 				{{(story)?.status}}
 			</div>
+
+			<progress value="{{(story)?.progress}}" max="{{(story)?.size}}" class="story-progress"></progress>
+
 		</ion-card-content>
 
 		<ion-row no-padding>
 			<ion-col text-left>
-
+				<button ion-button clear small color="default" icon-left (click)="emitLeftClick(story)" [hidden]="!config.left">
+					{{config.left}}
+				</button>
 			</ion-col>
 			<ion-col text-center>
+				<button ion-button clear small color="default" icon-left (click)="emitCenterClick(story)" [hidden]="!config.center">
+					{{config.center}}
+				</button>
 			</ion-col>
 			<ion-col text-right>
 				<button ion-button clear small color="default" icon-left (click)="emitRightClick(story)" [hidden]="!config.right">

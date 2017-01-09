@@ -90,5 +90,39 @@ export class StoryService {
 
   }
 
+  public incrementProgress(story: Story){
+    
+    let storyId = story.$key;
+
+    let progress = story.progress;
+
+    if (progress == undefined){
+      progress = 1;
+      console.log('incrementProgress::undefined' + progress);
+    }
+    else if (progress < story.size){
+      progress = story.progress + 1;
+      console.log('incrementProgress::add' + progress);
+    } else{
+      console.log('incrementProgress::nothing' + progress);
+    }
+
+
+    this.database.object(`/stories/${storyId}`).update({progress: progress});
+
+  }
+
+  public decrementProgress(story: Story){
+    let storyId = story.$key;
+    let progress = story.progress;
+    if (progress == undefined){
+      progress = 0;
+    }
+    else if (story.progress > 0){
+      let progress = story.progress - 1;
+      this.database.object(`/stories/${storyId}`).update({progress: progress});
+    }
+  }
+
 
 }

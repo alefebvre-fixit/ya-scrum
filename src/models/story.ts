@@ -15,6 +15,8 @@ export class Story{
     size: number;
     sprintId: string;
 
+    progress:number;
+
     public static getUpdate(story: any): any {
 
         const result = Object.assign({}, story);
@@ -32,6 +34,7 @@ export class Story{
         result.status = 'new';
         result.type = 'feature';
         result.size = 1;
+        result.progress = 0;
         
         return result;
 

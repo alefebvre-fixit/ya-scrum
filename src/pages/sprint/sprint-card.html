@@ -18,6 +18,9 @@
 			<div class="sprint-status">
 				{{(sprint)?.status}}
 			</div>
+
+			<progress value="{{(sprint)?.progress}}" max="{{(sprint)?.size}}" class="sprint-progress"></progress>
+
 		</ion-card-content>
 
 		<ion-row no-padding>

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { NavParams, ViewController, PopoverController  } from 'ionic-angular';
 import { ModalController, NavController } from 'ionic-angular';
 
-import { SprintService } from '../../services/index';
+import { SprintService, StoryService } from '../../services/index';
 import { Sprint, Story } from '../../models/index';
 import { SprintConversationPage } from './sprint-conversation';
 import { SprintPopoverPage } from './sprint-popover';
@@ -18,7 +18,7 @@ export class SprintViewPage {
 
   public sprint: Sprint;
   public stories: Story[];
-  public cardConfig = {right: "details"};
+  public cardConfig = {right: "details", left:"add", center:"remove"};
 
   constructor(
     public params: NavParams,
@@ -26,6 +26,8 @@ export class SprintViewPage {
     public modalCtrl: ModalController,
     public navCtrl: NavController,
     public sprintService: SprintService,
+    public storyService: StoryService,
+
     public popoverCtrl: PopoverController
   ) {
   }
@@ -69,5 +71,14 @@ export class SprintViewPage {
       id: story.$key
     });
   }
+
+  incrementProgress(story: Story){
+    this.storyService.incrementProgress(story);
+  }
+
+  decrementProgress(story: Story){
+    this.storyService.decrementProgress(story);
+  }
+
 
 }
