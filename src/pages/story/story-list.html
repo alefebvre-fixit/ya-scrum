@@ -16,6 +16,6 @@
 
 <ion-content>
 
-	<story-card [stories]="stories" [config]="cardConfig" (rightClick)="navigateToDetails($event)" ></story-card>
+	<story-card [stories]="stories" [config]="cardConfig" (rightClick)="navigateToDetails($event)" (leftClick)="progress($event)"></story-card>
 
 </ion-content>

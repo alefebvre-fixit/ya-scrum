@@ -5,6 +5,7 @@ import { StoryEditPage } from './story-edit';
 import { Story } from '../../models/index';
 import { StoryService } from '../../services/index';
 import { ToastController } from 'ionic-angular';
+import { StoryProgressPage } from './story-progress';
 
 @Component({
   template: `
@@ -12,7 +13,9 @@ import { ToastController } from 'ionic-angular';
       <ion-list-header>Story</ion-list-header>
       <button ion-item (click)="edit()">Edit</button>
       <button ion-item (click)="unassign()">Un-Assign</button>
+      <button ion-item (click)="progress()">Progress</button>
       <button ion-item (click)="close()">Close</button>
+
     </ion-list>
   `
 })
@@ -57,6 +60,14 @@ export class StoryPopoverPage {
       let editModal = this.modalCtrl.create(StoryEditPage, { storyId: this.story.$key });
       this.close();
       editModal.present();
+    }
+  }
+
+  progress() {
+    if (this.story) {
+      let progressModal = this.modalCtrl.create(StoryProgressPage, { storyId: this.story.$key });
+      this.close();
+      progressModal.present();
     }
   }
 

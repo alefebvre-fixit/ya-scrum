@@ -10,6 +10,9 @@ export class Sprint {
     endDate: Date;
     conversationId: string;
 
+    progress:number;
+    progressHistory: number[];
+
     public static getUpdate(sprint: any): any {
 
         const result = Object.assign({}, sprint);

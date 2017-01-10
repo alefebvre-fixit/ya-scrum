@@ -34,8 +34,8 @@ export class SprintService {
     join[storyId] = true;
 
     this.database.object('/storyPerSprint/' + sprintId).update(join);
-    this.database.object('/stories/' + storyId).update({sprintId: sprintId, status: "assigned"});
-
+    this.database.object('/stories/' + storyId).update({sprintId: sprintId, status: "assigned", progress:0});
+    
   }   
  
   public getSprint(sprintKey: string): Observable<Sprint> {

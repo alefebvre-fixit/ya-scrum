@@ -99,7 +99,7 @@ export class StoryService {
     if (progress == undefined){
       progress = 1;
       console.log('incrementProgress::undefined' + progress);
-    }
+    }    
     else if (progress < story.size){
       progress = story.progress + 1;
       console.log('incrementProgress::add' + progress);
@@ -107,8 +107,18 @@ export class StoryService {
       console.log('incrementProgress::nothing' + progress);
     }
 
+    let progressHistory = story.progressHistory;
 
-    this.database.object(`/stories/${storyId}`).update({progress: progress});
+    if (progressHistory == undefined){
+      progressHistory = new Array<number>();
+      progressHistory.push(progress);
+    } else {
+      //TODO Change
+      progressHistory[0] = progress;
+      
+    }
+
+    this.database.object(`/stories/${storyId}`).update({progress: progress, progressHistory: progressHistory});
 
   }
 

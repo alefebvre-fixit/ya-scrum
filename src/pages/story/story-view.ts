@@ -4,6 +4,7 @@ import { StoryService, SprintService } from '../../services/index';
 import { Story, Sprint } from '../../models/index';
 import { StoryPopoverPage } from './story-popover';
 
+
 @Component({
   selector: 'story-view',
   templateUrl: 'story-view.html',

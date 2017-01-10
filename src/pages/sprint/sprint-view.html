@@ -3,15 +3,11 @@
 		<ion-title>
 			{{(sprint)?.name}}
 		</ion-title>
-		<button ion-button clear small color="default" icon-left (click)="openConversation(sprint.$key)">
-          messages
-        </button>
 		<ion-buttons end>
 			<button ion-button (click)="presentPopover($event)">
 				<ion-icon name="more"></ion-icon>
 			</button>
 		</ion-buttons>
-
 	</ion-navbar>
 </ion-header>
 
@@ -72,4 +68,6 @@
 		</ion-list-header>
 	</ion-list>
 	<story-card [stories]="stories" [config]="cardConfig" (rightClick)="navigateToDetails($event)" (leftClick)="incrementProgress($event)" (centerClick)="decrementProgress($event)"></story-card>
+
+
 </ion-content>

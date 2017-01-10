@@ -14,6 +14,7 @@ import { StoryEditPage } from '../pages/story/story-edit';
 import { StoryViewPage } from '../pages/story/story-view';
 import { StoryPopoverPage } from '../pages/story/story-popover';
 import { StoryCard } from '../pages/story/story-card';
+import { StoryProgressPage } from '../pages/story/story-progress';
 
 
 import { SprintListPage } from '../pages/sprint/sprint-list';
@@ -52,6 +53,7 @@ export const firebaseConfig = {
     StoryPopoverPage,
     StorySelectorPage,
     StoryCard,
+    StoryProgressPage,
 
     SprintListPage,
     SprintEditPage,
@@ -82,6 +84,7 @@ export const firebaseConfig = {
     StoryPopoverPage,
     StorySelectorPage,
     StoryCard,
+    StoryProgressPage,
 
     SprintListPage,
     SprintEditPage,

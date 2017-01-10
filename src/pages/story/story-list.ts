@@ -6,6 +6,7 @@ import { StoryService } from '../../services/index';
 import { Story } from '../../models/index';
 import { StoryEditPage } from './story-edit';
 import { StoryViewPage } from './story-view';
+import { StoryProgressPage } from './story-progress';
 
 @Component({
   templateUrl: 'story-list.html',
@@ -14,7 +15,7 @@ import { StoryViewPage } from './story-view';
 export class StoryListPage {
 
   public stories: Story[];
-  public cardConfig = {right: "details"};
+  public cardConfig = {right: "details", left:"progress"};
 
   constructor(
     public navCtrl: NavController,
@@ -41,6 +42,13 @@ export class StoryListPage {
     this.navCtrl.push(StoryViewPage, {
       id: story.$key
     });
+  }
+
+  progress(story: Story) {
+    if (story) {
+      let progressModal = this.modalCtrl.create(StoryProgressPage, { storyId: story.$key });
+      progressModal.present();
+    }
   }
 
 

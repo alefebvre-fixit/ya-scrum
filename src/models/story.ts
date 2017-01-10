@@ -16,6 +16,7 @@ export class Story{
     sprintId: string;
 
     progress:number;
+    progressHistory: number[];
 
     public static getUpdate(story: any): any {
 
