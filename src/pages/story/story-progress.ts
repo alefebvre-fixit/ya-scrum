@@ -46,13 +46,16 @@ export class StoryProgressPage {
     this.day--;
   }
 
-
   addProgress(){
     this.dailyProgress++;
   }
 
   removeProgress(){
     this.dailyProgress--;
+  }
+
+  apply(){
+
   }
 
 

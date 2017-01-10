@@ -74,16 +74,18 @@
 
   <p>
 
-    <button ion-button color="light" icon-only (click)="addProgress()">
+    <button ion-button color="light" icon-only (click)="removeProgress()">
       <ion-icon name='arrow-down'></ion-icon>
     </button>
 
-    <button ion-button color="light" icon-only (click)="removeProgress()">
+    <button ion-button color="light" icon-only (click)="addProgress()">
       <ion-icon name='arrow-up'></ion-icon>
     </button>
 
   </p>
 
-
+      <div padding>
+        <button ion-button color="primary" block (click)="apply()">Apply</button>
+      </div>
 
 </ion-content>
