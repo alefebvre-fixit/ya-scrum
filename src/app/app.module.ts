@@ -8,6 +8,8 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { AngularFireModule } from 'angularfire2';
 
+import { ChartsModule } from 'ng2-charts/ng2-charts';
+
 
 import { StoryListPage } from '../pages/story/story-list';
 import { StoryEditPage } from '../pages/story/story-edit';
@@ -30,6 +32,7 @@ import { StorySelectorPage } from '../pages/sprint/story-selector';
 import { SprintService } from '../services/index';
 import { StoryService } from '../services/index';
 import { YaAvatar } from '../common/ya-avatar';
+
 
 // YOUR SETTINGS GOES HERE!
 export const firebaseConfig = {
@@ -70,6 +73,7 @@ export const firebaseConfig = {
   imports: [
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
+    ChartsModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

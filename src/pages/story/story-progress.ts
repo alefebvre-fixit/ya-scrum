@@ -18,6 +18,12 @@ export class StoryProgressPage {
   public day: number = 0;
   public dailyProgress = 0;
 
+    // Doughnut
+  public doughnutChartLabels:string[] = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
+  public doughnutChartData:number[] = [350, 450, 100];
+  public doughnutChartType:string = 'doughnut';
+
+
   constructor(
     public storyService: StoryService,
     public sprintService: SprintService,
@@ -57,6 +63,17 @@ export class StoryProgressPage {
   apply(){
 
   }
+
+
+    // events
+  public chartClicked(e:any):void {
+    console.log(e);
+  }
+
+  public chartHovered(e:any):void {
+    console.log(e);
+  }
+
 
 
 }
