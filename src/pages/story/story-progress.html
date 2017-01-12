@@ -23,7 +23,7 @@
 				</button>
 			</ion-col>
 			<ion-col width-33 style="vertical-align: middle;">
-				Day {{day}}
+				Day {{progress?.day}}
 			</ion-col>
 			<ion-col width-33>
 				<button ion-button color="light" icon-right (click)="nextDay()" outline>
@@ -36,16 +36,20 @@
 
 	<ion-list no-border>
 		<ion-item>
+			Story Size
+			<ion-badge item-right color="color1">{{story?.size}} hours</ion-badge>
+		</ion-item>
+		<ion-item>
 			Completed
-			<ion-badge item-right color="color1">{{initialProgress}} hours</ion-badge>
+			<ion-badge item-right color="color1">{{progress?.previous}} hours</ion-badge>
 		</ion-item>
 		<ion-item>
 			Daily Progress
-			<ion-badge item-right color="color2">{{dailyProgress}} hours</ion-badge>
+			<ion-badge item-right color="color2">{{progress?.daily}} hours</ion-badge>
 		</ion-item>
 		<ion-item>
 			Remaining
-			<ion-badge item-right color="color3">{{remaining}} hours</ion-badge>
+			<ion-badge item-right color="color3">{{progress?.remaining}} hours</ion-badge>
 		</ion-item>
 	</ion-list>
 

@@ -24,7 +24,7 @@ export class StoryProgressPage {
   public remaining = 0;
 
     // Doughnut
-  public doughnutChartLabels:string[] = ['progress', 'daily', 'remaining'];
+  public doughnutChartLabels:string[] = ['previous', 'daily', 'remaining'];
   public doughnutChartData:number[] = [0, 0, 1];
   public doughnutChartType:string = 'doughnut';
   public colors:any = [{ backgroundColor: ["#15B7B9", "#10DDC2", "#F5F5F5"] }];
@@ -45,22 +45,10 @@ export class StoryProgressPage {
   ngOnInit(): void {
     let storyId = this.params.get("storyId");
     this.storyService.getStory(storyId).subscribe((story: Story) => {
+
       this.story = story;
-
-
       this.progress = this.getCurrentProgress(story);
-
-      this.initialProgress = story.progress;
-      if (this.initialProgress == undefined){
-        this.initialProgress = 0;
-        story.progress = 0;
-      }
-      
-      this.dailyProgress = 0;
-      this.story.size - this.story.progress;
-      this.remaining = this.story.size - this.story.progress;
-
-      this.updateChart(this.initialProgress, this.dailyProgress, this.remaining);
+      this.updateChart(this.progress);
 
     });
   }
@@ -88,24 +76,25 @@ export class StoryProgressPage {
 
 
   incerementProgress(increment: number){
-    this.dailyProgress =  this.dailyProgress + increment ;
 
-    let daily = this.dailyProgress++
-    let remaining = this.story.size - this.story.progress;
+    let value = increment;
 
-    if (daily > remaining){
-      daily = remaining;
+    if (increment > 0 && increment > this.progress.remaining){
+      value = this.progress.remaining;
+    } else if (increment < 0 && -increment > this.progress.daily){
+      value = -this.progress.daily;
     }
 
-    this.dailyProgress = daily;
-    this.remaining = this.story.size - this.story.progress - daily;
+    this.progress.daily =  this.progress.daily + value;
+    this.progress.total = this.progress.previous + this.progress.daily;
+    this.progress.remaining = this.story.size - this.progress.total;
     
-    this.updateChart(this.initialProgress, this.dailyProgress, this.remaining);
+    this.updateChart(this.progress);
  
  }
 
- updateChart(progress: number, daily: number, remaining: number){
-    this.doughnutChartData= [progress, daily, remaining];
+  public updateChart(progress: Progress){
+    this.doughnutChartData= [progress.previous, progress.daily, progress.remaining];
  }
 
 
@@ -115,6 +104,7 @@ export class StoryProgressPage {
 
    result.day = 1;
    result.date = new Date();
+   result.previous = 0;
    result.daily = 0;
    result.total = 0;
    result.remaining = story.size;
