@@ -1,3 +1,5 @@
+import { Progress } from './progress';
+
 export class Story{
     
     $key: string;
@@ -17,6 +19,9 @@ export class Story{
 
     progress:number;
     progressHistory: number[];
+
+    history: Progress[];
+
 
     public static getUpdate(story: any): any {
 
@@ -38,9 +43,5 @@ export class Story{
         result.progress = 0;
         
         return result;
-
     }
-
-
-
 }

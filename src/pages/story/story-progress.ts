@@ -5,7 +5,7 @@ import { ToastController } from 'ionic-angular';
 import { StoryService } from '../../services/index';
 import { SprintService } from '../../services/index';
 
-import { Story } from '../../models/index';
+import { Story, Progress } from '../../models/index';
 
 @Component({
   selector: 'story-progress',
@@ -15,7 +15,9 @@ import { Story } from '../../models/index';
 export class StoryProgressPage {
 
   public story: Story;
-  public day: number = 0;
+  public progress: Progress;
+
+  public day: number = 1;
 
   public initialProgress = 0;
   public dailyProgress = 0;
@@ -25,13 +27,11 @@ export class StoryProgressPage {
   public doughnutChartLabels:string[] = ['progress', 'daily', 'remaining'];
   public doughnutChartData:number[] = [0, 0, 1];
   public doughnutChartType:string = 'doughnut';
+  public colors:any = [{ backgroundColor: ["#15B7B9", "#10DDC2", "#F5F5F5"] }];
 
 
   //https://github.com/valor-software/ng2-charts/issues/251
   //http://stackoverflow.com/questions/20966817/how-to-add-text-inside-the-doughnut-chart-using-chart-js
-  public colors = [
-                "#FF6384",
-            ];
 
   constructor(
     public storyService: StoryService,
@@ -47,6 +47,9 @@ export class StoryProgressPage {
     this.storyService.getStory(storyId).subscribe((story: Story) => {
       this.story = story;
 
+
+      this.progress = this.getCurrentProgress(story);
+
       this.initialProgress = story.progress;
       if (this.initialProgress == undefined){
         this.initialProgress = 0;
@@ -55,6 +58,8 @@ export class StoryProgressPage {
       
       this.dailyProgress = 0;
       this.story.size - this.story.progress;
+      this.remaining = this.story.size - this.story.progress;
+
       this.updateChart(this.initialProgress, this.dailyProgress, this.remaining);
 
     });
@@ -72,15 +77,17 @@ export class StoryProgressPage {
     this.day--;
   }
 
-  addProgress(){
-    this.progress(+1);
+  addProgress(increment: number){
+    this.incerementProgress(+increment);
   }
  
-  removeProgress(){
-    this.progress(-1);
+  removeProgress(increment: number){
+    this.incerementProgress(-increment);
   }
 
-  progress(increment: number){
+
+
+  incerementProgress(increment: number){
     this.dailyProgress =  this.dailyProgress + increment ;
 
     let daily = this.dailyProgress++
@@ -102,7 +109,19 @@ export class StoryProgressPage {
  }
 
 
+ public getCurrentProgress(story: Story): Progress {
 
+   let result = new Progress();
+
+   result.day = 1;
+   result.date = new Date();
+   result.daily = 0;
+   result.total = 0;
+   result.remaining = story.size;
+
+   return result;
+   
+ }
 
 
 

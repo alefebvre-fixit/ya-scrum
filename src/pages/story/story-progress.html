@@ -5,105 +5,97 @@
 		</ion-title>
 		<ion-buttons start>
 			<button ion-button (click)="close()">
-        <span color="primary" showWhen="ios">Cancel</span>
-        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
-      </button>
+        		<span color="primary" showWhen="ios">Cancel</span>
+        		<ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      		</button>
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+	<ion-grid>
+		<ion-row style="text-align: center;">
+			<ion-col width-33 style="text-align: center;">
+				<button ion-button color="light" icon-left (click)="previousDay()" outline>
+				<ion-icon name='arrow-back'></ion-icon>
+					Back
+				</button>
+			</ion-col>
+			<ion-col width-33 style="vertical-align: middle;">
+				Day {{day}}
+			</ion-col>
+			<ion-col width-33>
+				<button ion-button color="light" icon-right (click)="nextDay()" outline>
+      			Next
+      			<ion-icon name='arrow-forward'></ion-icon>
+    			</button>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
 
+	<ion-list no-border>
+		<ion-item>
+			Completed
+			<ion-badge item-right color="color1">{{initialProgress}} hours</ion-badge>
+		</ion-item>
+		<ion-item>
+			Daily Progress
+			<ion-badge item-right color="color2">{{dailyProgress}} hours</ion-badge>
+		</ion-item>
+		<ion-item>
+			Remaining
+			<ion-badge item-right color="color3">{{remaining}} hours</ion-badge>
+		</ion-item>
+	</ion-list>
 
-<ion-grid>
-  <ion-row>
-    <ion-col width-33>
-
-	<button ion-button color="light" icon-left (click)="previousDay()">
-      <ion-icon name='arrow-back'></ion-icon>
-      Back
-    </button>
-
-	</ion-col>
-    <ion-col width-33>Day {{day}}</ion-col>
-
-    <ion-col width-33>
-
-    <button ion-button color="light" icon-right (click)="nextDay()">
-      Next
-      <ion-icon name='arrow-forward'></ion-icon>
-    </button>
-
-
-	</ion-col>
-
-  </ion-row>
-</ion-grid>
-
-
-  <ion-list no-border>
-
-    <ion-item>
-      Size
-      <ion-note item-right>
-      {{story?.size}}
-      </ion-note>
-    </ion-item>
-
-
-    <ion-item>
-      Initial Progress
-      <ion-note item-right>
-      {{story?.progress}}
-      </ion-note>
-    </ion-item>
-
-	<ion-item>
-      Daily
-      <ion-note item-right>
-      {{dailyProgress}}
-      </ion-note>
-    </ion-item>
-
-	<ion-item>
-      Remaining
-      <ion-note item-right>
-      {{remaining}}
-      </ion-note>
-    </ion-item>
-
-  </ion-list>
-
-<div>
-	<div style="display: block">
-	<canvas height="200" baseChart
-				[data]="doughnutChartData"
-				[labels]="doughnutChartLabels"
-				[chartType]="doughnutChartType"
-				[legend]="false"
-
-				(chartHover)="chartHovered($event)"
-				(chartClick)="chartClicked($event)"></canvas>
+	<div>
+		<div style="display: block">
+			<canvas height="180" baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"
+				[legend]="false" [colors]="colors" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+		</div>
 	</div>
-</div>
 
 
-
-  <p>
-
-    <button ion-button color="light" icon-only (click)="removeProgress()">
-      <ion-icon name='arrow-down'></ion-icon>
-    </button>
-
-    <button ion-button color="light" icon-only (click)="addProgress()">
-      <ion-icon name='arrow-up'></ion-icon>
-    </button>
-
-  </p>
-
-      <div padding>
-        <button ion-button color="primary" block (click)="apply()">Apply</button>
-      </div>
+	<ion-grid>
+		<ion-row>
+			<ion-col width-25>
+				<button ion-button color="color4" icon-right (click)="removeProgress(2)" outline>
+					MIN 2
+				</button>
+			</ion-col>
+			<ion-col width-25>
+				<button ion-button color="color4" icon-right (click)="removeProgress(1)" outline>
+      				MIN 1
+    			</button>
+			</ion-col>
+			<ion-col width-25>
+				<button ion-button color="color1" icon-left (click)="addProgress(1)" outline>
+					ADD 1
+				</button>
+			</ion-col>
+			<ion-col width-25>
+				<button ion-button color="color1" icon-left (click)="addProgress(2)" outline>
+      				ADD 2
+    			</button>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
 
 </ion-content>
+
+<ion-footer>
+	<ion-toolbar>
+		<ion-buttons left (click)="close()">
+			<button ion-button>
+        Cancel
+      </button>
+		</ion-buttons>
+
+		<ion-buttons right>
+			<button ion-button>
+        Apply
+      </button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-footer>

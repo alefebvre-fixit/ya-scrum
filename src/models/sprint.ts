@@ -1,3 +1,6 @@
+import { Story } from './story';
+import { Progress } from './progress';
+
 export class Sprint {
     
     $key: string;
@@ -12,6 +15,9 @@ export class Sprint {
 
     progress:number;
     progressHistory: number[];
+
+    impediment: Story;
+    history: Progress[];
 
     public static getUpdate(sprint: any): any {
 
