@@ -29,6 +29,8 @@
 		<div class="story-status">
 			{{(story)?.status}}
 		</div>
+		<progress value="{{(story)?.progress}}" max="{{(story)?.size}}" class="story-progress"></progress>
+
 	</div>
 	<ion-grid>
 		<ion-row>

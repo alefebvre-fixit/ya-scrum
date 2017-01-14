@@ -47,7 +47,7 @@ export class StorySelectorPage {
 
   presentToast() {
     let toast = this.toastCtrl.create({
-      message: 'Story un-assigned successfully',
+      message: 'Story assigned successfully',
       duration: 3000
     });
     toast.present();

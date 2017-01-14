@@ -23,7 +23,7 @@
 				</button>
 			</ion-col>
 			<ion-col width-33 style="vertical-align: middle;">
-				Day {{progress?.day}}
+				Day {{day}}
 			</ion-col>
 			<ion-col width-33>
 				<button ion-button color="light" icon-right (click)="nextDay()" outline>
@@ -55,11 +55,10 @@
 
 	<div>
 		<div style="display: block">
-			<canvas height="180" baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"
-				[legend]="false" [colors]="colors" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+			<canvas height="170" baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"
+				[legend]="false" [colors]="colors" [options]="options"></canvas>
 		</div>
 	</div>
-
 
 	<ion-grid>
 		<ion-row>
@@ -85,7 +84,6 @@
 			</ion-col>
 		</ion-row>
 	</ion-grid>
-
 </ion-content>
 
 <ion-footer>
@@ -96,7 +94,7 @@
       </button>
 		</ion-buttons>
 
-		<ion-buttons right>
+		<ion-buttons right (click)="apply()">
 			<button ion-button>
         Apply
       </button>

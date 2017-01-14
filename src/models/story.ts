@@ -10,7 +10,7 @@ export class Story{
     description: string;
     acceptanceCriterias : string;
     comment: string;
-
+    duration: number;
     
     priority: number;
     estimate: number;
@@ -18,7 +18,6 @@ export class Story{
     sprintId: string;
 
     progress:number;
-    progressHistory: number[];
 
     history: Progress[];
 

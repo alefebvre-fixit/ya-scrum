@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { Story } from '../models/index';
+import { Story, Progress } from '../models/index';
 import { AngularFireDatabase } from 'angularfire2';
 
 const STORIES = 'stories';
@@ -77,7 +77,7 @@ export class StoryService {
   }
 
   public unassignStory(story: Story) {
-    
+
     let storyId = story.$key;
     let sprintId = story.sprintId;
 
@@ -86,53 +86,81 @@ export class StoryService {
 
     this.database.object(`/storyPerSprint/${sprintId}/${storyId}`).remove();
     this.database.object(`/stories/${storyId}/sprintId`).remove();
-    this.database.object(`/stories/${storyId}`).update({status: "new"});
+    this.database.object(`/stories/${storyId}`).update({ status: "new" });
 
   }
 
-  public incrementProgress(story: Story){
-    
-    let storyId = story.$key;
+  public increment(story: Story, progress: Progress, increment: number) {
 
-    let progress = story.progress;
+    let value = increment;
 
-    if (progress == undefined){
-      progress = 1;
-      console.log('incrementProgress::undefined' + progress);
-    }    
-    else if (progress < story.size){
-      progress = story.progress + 1;
-      console.log('incrementProgress::add' + progress);
-    } else{
-      console.log('incrementProgress::nothing' + progress);
+    if (increment > 0 && increment > progress.remaining) {
+      value = progress.remaining;
+    } else if (increment < 0 && -increment > progress.daily) {
+      value = - progress.daily;
     }
 
-    let progressHistory = story.progressHistory;
+    progress.daily = progress.daily + value;
+    progress.total = progress.previous + progress.daily;
+    progress.remaining = story.size - progress.total;
 
-    if (progressHistory == undefined){
-      progressHistory = new Array<number>();
-      progressHistory.push(progress);
+  }
+
+  public createProgress(story: Story, day: number) {
+
+    let result = new Progress();
+
+    result.day = day;
+    result.date = new Date();
+    result.previous = 0;
+    result.daily = 0;
+    result.total = 0;
+    result.remaining = story.size;
+
+    return result;
+
+  }
+
+  public getProgress(story: Story, day: number): Progress {
+    if (day > 0 && story.history && day <= story.history.length) {
+      return story.history[day - 1];
     } else {
-      //TODO Change
-      progressHistory[0] = progress;
-      
-    }
-
-    this.database.object(`/stories/${storyId}`).update({progress: progress, progressHistory: progressHistory});
-
-  }
-
-  public decrementProgress(story: Story){
-    let storyId = story.$key;
-    let progress = story.progress;
-    if (progress == undefined){
-      progress = 0;
-    }
-    else if (story.progress > 0){
-      let progress = story.progress - 1;
-      this.database.object(`/stories/${storyId}`).update({progress: progress});
+      return undefined;
     }
   }
+
+
+  public calculateProgress(story: Story) {
+    console.log("calculateProgress=");
+
+    let history = story.history;
+
+    story.progress = story.progress = history.reduce(function (sum: number, progress: Progress) {
+      progress.previous = sum;
+      progress.remaining = story.size - progress.previous - progress.daily;
+      return progress.previous + progress.daily;
+    }, 0);
+
+    if (story.progress > 0) {
+      if (story.progress >= story.size) {
+        story.status = "closed"
+      } else {
+        story.status = "started"
+      }
+    } else {
+      story.status = "assigned";
+    }
+  }
+
+
+  public saveProgress(story: Story) {
+    this.calculateProgress(story);
+    this.save(story);
+  }
+
+
+
+
 
 
 }

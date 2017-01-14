@@ -1,8 +1,8 @@
 export class Progress{
     date: Date;
-    day: number;
-    total: number;
-    previous: number;
-    daily: number;
-    remaining: number;
+    day: number = 1;
+    total: number = 0;
+    previous: number = 0;
+    daily: number = 0;
+    remaining: number = 0;
 }

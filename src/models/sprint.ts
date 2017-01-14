@@ -9,12 +9,16 @@ export class Sprint {
     name: string;
     status: string;
     description: string;
+    
     startDate: Date;
     endDate: Date;
+    duration: number;
+    
     conversationId: string;
 
     progress:number;
     progressHistory: number[];
+
 
     impediment: Story;
     history: Progress[];
@@ -31,9 +35,10 @@ export class Sprint {
     public static create(): Sprint{
         let result : Sprint = new Sprint();
         
+        result.duration = 15;
         result.startDate = new Date();
         result.endDate = new Date(result.startDate);
-        result.startDate.setDate(result.startDate.getDate() + 15);
+        result.startDate.setDate(result.startDate.getDate() + result.duration);
 
         return result;
 

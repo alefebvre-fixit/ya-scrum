@@ -29,7 +29,10 @@
 				<ion-label floating>Description</ion-label>
 				<ion-textarea [(ngModel)]="sprint.description" #description="ngModel" name="description" id="description" required></ion-textarea>
 			</ion-item>
-
+      <ion-item>
+        <ion-label floating>Duration</ion-label>
+        <ion-input type="number" placeholder="Duration" [(ngModel)]="sprint.duration" #name="ngModel" name="duration" id="duration"></ion-input>
+      </ion-item>
       <ion-item>
         <ion-label>Start Date</ion-label>
         <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="sprint.startDate" #startDate="ngModel" name="startDate" id="startDate" required></ion-datetime>

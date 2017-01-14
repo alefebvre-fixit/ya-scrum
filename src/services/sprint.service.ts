@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { Sprint, Story } from '../models/index';
+import { Sprint, Story, Progress } from '../models/index';
 import { AngularFireDatabase } from 'angularfire2';
 
 const SPRINTS = '/sprints';
@@ -27,17 +27,33 @@ export class SprintService {
       .map(storiesPerSprint => storiesPerSprint.map(storyKey => this.database.object('stories/' + storyKey))).flatMap(fbos => Observable.combineLatest(fbos));
   }
 
+  public getStory(storyKey: string): Observable<Story> {
+    return this.database.object('/stories/' + storyKey);
+  }
+
   public assignToSprint(sprintId: string, storyId: string) {
     console.log("addStoryToSprint sprintId = " + sprintId + " storyId=" + storyId);
 
-    let join = new Object();
-    join[storyId] = true;
+    this.getSprint(sprintId).subscribe(sprint => {
+      this.getStory(storyId).subscribe(story => {
 
-    this.database.object('/storyPerSprint/' + sprintId).update(join);
-    this.database.object('/stories/' + storyId).update({sprintId: sprintId, status: "assigned", progress:0});
-    
-  }   
- 
+        let join = new Object();
+        join[storyId] = true;
+
+        let progress: Progress = new Progress();
+        progress.day = 1
+        progress.remaining = story.size;
+
+        let history = new Array<Progress>(story.duration);
+        history[0] = progress;
+
+        this.database.object('/storyPerSprint/' + sprintId).update(join);
+        this.database.object('/stories/' + storyId).update({ sprintId: sprintId, status: "assigned", progress: 0, duration: sprint.duration, history: history });
+
+      })
+    });
+  }
+
   public getSprint(sprintKey: string): Observable<Sprint> {
     return this.database.object('/sprints/' + sprintKey);
   }
@@ -59,59 +75,6 @@ export class SprintService {
     console.log("update " + sprint)
     this.database.object('/sprints/' + sprint.$key).update(Sprint.getUpdate(sprint));
   }
-  /*
-    findAllStoriesForSprint(sprintId: string): Observable<Story[]> {
-      const storiesPerSprint$ = this.database.list('storyPerSprint/' + sprintId);
-  
-      return storiesPerSprint$.map(storiesPerSprint => storiesPerSprint
-        .map( storyPerSprint => this.database.object('stories/' + storyPerSprint.$key)))
-        .flatMap( fbos => Observable.combineLatest(fbos)) 
-        .do(console.log)
-        ;
-    }
-  */
-
-
-
-
-  /*
-    create(sprint: Sprint) {
-      let conversation = new Conversation();
-      conversation.messages = new Array<Message>();
-      conversation.messages.push({"message": 'Hello World', "username": "antoinelefebvre"});
-  
-      const itemObservable = this.database.object('/item');
-      itemObservable.set({ name: 'new name!'});
-  
-  
-  
-      this.database.list(SPRINTS).push(sprint);
-      //let sprintKey = this.database.list(SPRINT_CONVERSATIONS).push(conversation).key;
-  
-      }
-      /*
-      console.log(sprint);
-      console.log(conversation);
-      this.angularFire.database.list(SPRINT_CONVERSATIONS).push(conversation).then(conversation => {
-      console.log(conversation);
-  
-        sprint.conversationId = conversation.$key;
-        this._sprints$.push(sprint);
-      });
-    }
-  
-    getConversationBySprint(id: string): Observable<Conversation> {
-      return this.angularFire.database.object(SPRINT_CONVERSATIONS + '/' + id);
-    }
-  
-    post(id: string) {
-      this.angularFire.database.object('/sprint-conversations/' + id);
-    }
-      */
-
-
-
-
 
 
 }
