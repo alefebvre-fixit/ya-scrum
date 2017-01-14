@@ -76,5 +76,9 @@ export class SprintService {
     this.database.object('/sprints/' + sprint.$key).update(Sprint.getUpdate(sprint));
   }
 
+  public updateSprintProgress(){
+    
+  }
+
 
 }

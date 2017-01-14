@@ -13,7 +13,6 @@
 </ion-header>
 
 <ion-content>
-
 	<ion-grid>
 		<ion-row style="text-align: center;">
 			<ion-col width-33 style="text-align: center;">
@@ -36,10 +35,6 @@
 
 	<ion-list no-border>
 		<ion-item>
-			Story Size
-			<ion-badge item-right color="color1">{{story?.size}} hours</ion-badge>
-		</ion-item>
-		<ion-item>
 			Completed
 			<ion-badge item-right color="color1">{{progress?.previous}} hours</ion-badge>
 		</ion-item>
@@ -55,7 +50,7 @@
 
 	<div>
 		<div style="display: block">
-			<canvas height="170" baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"
+			<canvas height="180" baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"
 				[legend]="false" [colors]="colors" [options]="options"></canvas>
 		</div>
 	</div>
