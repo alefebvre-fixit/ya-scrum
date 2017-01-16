@@ -13,7 +13,11 @@ import { SprintViewPage } from './sprint-view';
 })
 export class SprintListPage {
 
-  public sprints: Sprint[];
+  public sprintsProgress: Sprint[];
+  public sprintsPending: Sprint[];
+  public sprintsClosed: Sprint[];
+  public status: string = "progress";
+
   public cardConfig = {right: "details"};
 
   constructor(
@@ -23,8 +27,16 @@ export class SprintListPage {
   ) { }
 
   ngOnInit(): void {
-    this.sprintService.findAllSprints().subscribe((sprints: Sprint[]) => {
-      this.sprints = sprints;
+    this.sprintService.findByStatus("pending").subscribe((sprints: Sprint[]) => {
+      this.sprintsPending = sprints;
+    });
+
+    this.sprintService.findByStatus("progress").subscribe((sprints: Sprint[]) => {
+      this.sprintsProgress = sprints;
+    });
+
+    this.sprintService.findByStatus("closed").subscribe((sprints: Sprint[]) => {
+      this.sprintsClosed = sprints;
     });
 
   }

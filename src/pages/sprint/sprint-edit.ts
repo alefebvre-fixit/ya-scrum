@@ -24,7 +24,7 @@ export class SprintEditPage {
   ngOnInit(): void {
     const sprintId = this.params.get("sprintId");
     if (sprintId){
-      this.sprintService.getSprint(sprintId).subscribe(sprint => {
+      this.sprintService.findOne(sprintId).subscribe(sprint => {
         this.sprint = sprint;
       });
     }

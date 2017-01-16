@@ -44,7 +44,7 @@ export class StoryProgressPage {
 
   ngOnInit(): void {
     let storyId = this.params.get("storyId");
-    this.storyService.getStory(storyId).subscribe((story: Story) => {
+    this.storyService.findOne(storyId).subscribe((story: Story) => {
 
       this.story = story;
 

@@ -12,10 +12,35 @@
 		</ion-buttons>
 
 	</ion-navbar>
+
+
+	<ion-toolbar no-border-top>
+		<ion-segment [(ngModel)]="status">
+		<ion-segment-button value="progress">
+			In Progress
+		</ion-segment-button>
+		<ion-segment-button value="pending">
+			Pending
+		</ion-segment-button>
+		<ion-segment-button value="closed">
+			Closed
+		</ion-segment-button>
+		</ion-segment>
+	</ion-toolbar>
+
 </ion-header>
 
 <ion-content>
 
-	<sprint-card [sprints]="sprints" [config]="cardConfig" (rightClick)="navigateToDetails($event)" ></sprint-card>
-
+  <div [ngSwitch]="status">
+		<div *ngSwitchCase="'progress'">
+			<sprint-card [sprints]="sprintsProgress" [config]="cardConfig" (rightClick)="navigateToDetails($event)" ></sprint-card>
+		</div>
+		<div *ngSwitchCase="'pending'">
+			<sprint-card [sprints]="sprintsPending" [config]="cardConfig" (rightClick)="navigateToDetails($event)" ></sprint-card>
+		</div>
+		<div *ngSwitchCase="'closed'">
+			<sprint-card [sprints]="sprintsClosed" [config]="cardConfig" (rightClick)="navigateToDetails($event)" ></sprint-card>
+		</div>
+  </div>
 </ion-content>

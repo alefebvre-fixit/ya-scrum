@@ -13,7 +13,24 @@ export class SprintService {
   ) {
   }
 
-  public findAllSprints(): Observable<Sprint[]> {
+  public index(){
+    this.findAll().take(1).subscribe((sprints: Sprint[]) => {
+      console.log(sprints.length + "sprints to be index");
+        for (let sprint of sprints) {
+
+          console.log("Indexing sprint " + sprint);
+
+          if (sprint.status == undefined){
+            sprint.status = "new";
+          }
+
+          sprint.filter_status = Sprint.getFilterStatus(sprint.status);
+          this.save(sprint);
+        }
+    });
+  }
+
+  public findAll(): Observable<Sprint[]> {
     return this.database.list(SPRINTS);
   }
 
@@ -22,20 +39,29 @@ export class SprintService {
       .map(storyPerSprint => storyPerSprint.$key));
   }
 
-  public findAllStoriesForSprint(sprintId: string): Observable<Story[]> {
+  public findStoryBySprint(sprintId: string): Observable<Story[]> {
     return this.findStoryKeysPerSprint(sprintId)
       .map(storiesPerSprint => storiesPerSprint.map(storyKey => this.database.object('stories/' + storyKey))).flatMap(fbos => Observable.combineLatest(fbos));
   }
 
-  public getStory(storyKey: string): Observable<Story> {
+  public findOneStory(storyKey: string): Observable<Story> {
     return this.database.object('/stories/' + storyKey);
+  }
+
+  public findByStatus(status: string): Observable<Sprint[]> {
+    return this.database.list(SPRINTS, {
+      query: {
+        orderByChild: 'filter_status',
+        equalTo: status
+      }
+    });
   }
 
   public assignToSprint(sprintId: string, storyId: string) {
     console.log("assignToSprint sprintId = " + sprintId + " storyId=" + storyId);
 
-    this.getSprint(sprintId).take(1).subscribe(sprint => {
-      this.getStory(storyId).take(1).subscribe(story => {
+    this.findOne(sprintId).take(1).subscribe(sprint => {
+      this.findOneStory(storyId).take(1).subscribe(story => {
 
         console.log("assignToSprint after subscribe");
 
@@ -54,7 +80,7 @@ export class SprintService {
     });
   }
 
-  public getSprint(sprintKey: string): Observable<Sprint> {
+  public findOne(sprintKey: string): Observable<Sprint> {
     return this.database.object('/sprints/' + sprintKey);
   }
 
@@ -67,19 +93,24 @@ export class SprintService {
   }
 
   public create(sprint: Sprint) {
+    sprint.filter_status = Sprint.getFilterStatus(sprint.status);
+
     console.log("create sprint " + sprint)
+    
     this.database.list(SPRINTS).push(sprint);
   }
 
   public update(sprint: Sprint) {
+    sprint.filter_status = Sprint.getFilterStatus(sprint.status);
+
     console.log("update " + sprint)
+    
     this.database.object('/sprints/' + sprint.$key).update(Sprint.getUpdate(sprint));
   }
 
   public updateSprintProgress(story: Story) {
 
-    this.getSprint(story.sprintId).take(1).subscribe(sprint => {
-      console.log("Step0");
+    this.findOne(story.sprintId).take(1).subscribe(sprint => {
 
       for (let storyProgress of story.history) {
         //find sprintProgress for that day
@@ -92,12 +123,9 @@ export class SprintService {
       }
 
       //calculate progress for each day
-      console.log("Step1");
-
       if (sprint.history == undefined) {
         sprint.history = new Array<SprintProgress>();
       }
-      console.log("Step2");
 
       for (let sprintProgress of sprint.history) {
         let stories = sprintProgress.storiesProgress;
@@ -126,7 +154,11 @@ export class SprintService {
       console.log(sprint);
       console.log("Before Saving");
 
-      this.database.object('/sprints/' + sprint.$key).update({ status: sprint.status, progress: sprint.progress, duration: sprint.duration, history: sprint.history });
+      this.database.object('/sprints/' + sprint.$key).update({ status: sprint.status, 
+        filter_status: Sprint.getFilterStatus(sprint.status), 
+        progress: sprint.progress, 
+        duration: sprint.duration, 
+        history: sprint.history });
 
     });
   }

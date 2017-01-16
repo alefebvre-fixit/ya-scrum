@@ -5,7 +5,6 @@ import { AngularFireDatabase } from 'angularfire2';
 
 const STORIES = 'stories';
 
-
 @Injectable()
 export class StoryService {
 
@@ -48,11 +47,37 @@ export class StoryService {
     return this.storyPriorities;
   }
 
-  public findAllStories(): Observable<Story[]> {
+  public index() {
+    this.findAll().take(1).subscribe((stories: Story[]) => {
+      console.log(stories.length + "stories to be index");
+      for (let story of stories) {
+
+        console.log("Indexing story " + story);
+        if (story.status == undefined) {
+          story.status = "new";
+        }
+
+        story.filter_status = Story.getFilterStatus(story.status);
+        this.save(story);
+      }
+    });
+  }
+
+
+  public findAll(): Observable<Story[]> {
     return this.database.list(STORIES);
   }
 
-  public getStory(storyKey: string): Observable<Story> {
+  public findByStatus(status: string): Observable<Story[]> {
+    return this.database.list(STORIES, {
+      query: {
+        orderByChild: 'filter_status',
+        equalTo: status
+      }
+    });
+  }
+
+  public findOne(storyKey: string): Observable<Story> {
     return this.database.object('/stories/' + storyKey);
   }
 
@@ -65,11 +90,18 @@ export class StoryService {
   }
 
   public create(story: Story) {
+    story.filter_status = Story.getFilterStatus(story.status);
+
     console.log("create story " + story)
+
     this.database.list(STORIES).push(story);
   }
 
   public update(story: Story) {
+    story.filter_status = Story.getFilterStatus(story.status);
+
+    console.log("update story " + story)
+
     this.database.object('/stories/' + story.$key).update(Story.getUpdate(story));
   }
 
@@ -83,7 +115,7 @@ export class StoryService {
 
     this.database.object(`/storyPerSprint/${sprintId}/${storyId}`).remove();
     this.database.object(`/stories/${storyId}/sprintId`).remove();
-    this.database.object(`/stories/${storyId}`).update({ status: "new" });
+    this.database.object(`/stories/${storyId}`).update({ status: "new", filter_status: Story.getFilterStatus("new") });
 
   }
 
@@ -120,7 +152,6 @@ export class StoryService {
       } else {
         story.status = "assigned";
       }
-
     }
     console.log(story);
   }

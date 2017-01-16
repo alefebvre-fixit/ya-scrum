@@ -14,7 +14,11 @@ import { StoryProgressPage } from './story-progress';
 })
 export class StoryListPage {
 
-  public stories: Story[];
+  public storiesPending: Story[];
+  public storiesClosed: Story[];
+  public storiesInProgress: Story[];
+  public status: string = "progress";
+  
   public cardConfig = {right: "details", left:"progress"};
 
   constructor(
@@ -25,9 +29,18 @@ export class StoryListPage {
   }
 
   ngOnInit(): void {
-    this.storyService.findAllStories().subscribe((stories: Story[]) => {
-      this.stories = stories;
+    this.storyService.findByStatus("progress").subscribe((stories: Story[]) => {
+      this.storiesInProgress = stories;
     });
+
+    this.storyService.findByStatus("pending").subscribe((stories: Story[]) => {
+      this.storiesPending = stories;
+    });
+
+    this.storyService.findByStatus("closed").subscribe((stories: Story[]) => {
+      this.storiesClosed = stories;
+    });
+
   }
 
   add() {

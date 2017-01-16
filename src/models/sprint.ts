@@ -19,8 +19,11 @@ export class Sprint {
 
     progress: number;
 
-
     impediment: Story;
+
+    //Index for query
+    //http://stackoverflow.com/questions/26700924/query-based-on-multiple-where-clauses-in-firebase
+    filter_status: string;
 
     history: SprintProgress[];
 
@@ -83,6 +86,16 @@ export class Sprint {
             sprint.history[progress.day - 1] = progress;
         }
 
+    }
+
+    public static getFilterStatus(status: string): string {
+        if ("started" == status) {
+            return "progress";
+        }
+        if ("new" == status || undefined == status) {
+            return "pending";
+        } 
+        return status;
     }
 
 

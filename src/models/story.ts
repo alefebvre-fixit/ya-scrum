@@ -21,6 +21,10 @@ export class Story {
 
     history: StoryProgress[];
 
+    //Index for query
+    //http://stackoverflow.com/questions/26700924/query-based-on-multiple-where-clauses-in-firebase
+    filter_status: string;
+
     public static getUpdate(story: any): any {
 
         const result = Object.assign({}, story);
@@ -96,6 +100,16 @@ export class Story {
             story.history[progress.day - 1] = progress;
         }
 
+    }
+
+    public static getFilterStatus(status: string): string {
+        if ("started" == status || "assigned" == status) {
+            return "progress";
+        }
+        if ("new" == status || undefined == status) {
+            return "pending";
+        }
+        return status;
     }
 
 }

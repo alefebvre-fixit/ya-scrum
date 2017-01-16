@@ -27,7 +27,7 @@ export class StoryEditPage {
   ngOnInit(): void {
     const storyId = this.params.get("storyId");
     if (storyId){
-      this.storyService.getStory(storyId).subscribe(story => {
+      this.storyService.findOne(storyId).subscribe(story => {
         this.story = story;
       });
     }

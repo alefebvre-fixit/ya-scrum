@@ -36,11 +36,11 @@ export class SprintViewPage {
 
     const sprintId = this.params.get("id");
 
-    this.sprintService.getSprint(sprintId).subscribe(sprint => {
+    this.sprintService.findOne(sprintId).subscribe(sprint => {
       this.sprint = sprint;
     });
 
-    this.sprintService.findAllStoriesForSprint(sprintId).subscribe((stories: Story[]) => {
+    this.sprintService.findStoryBySprint(sprintId).subscribe((stories: Story[]) => {
       this.stories = stories;
     });
 
