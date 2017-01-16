@@ -10,29 +10,24 @@
         <ion-icon name="add"></ion-icon>
       </button>
 		</ion-buttons>
-
 	</ion-navbar>
-
-
-	<ion-toolbar no-border-top>
-		<ion-segment [(ngModel)]="status">
-		<ion-segment-button value="progress">
-			In Progress
-		</ion-segment-button>
-		<ion-segment-button value="pending">
-			Pending
-		</ion-segment-button>
-		<ion-segment-button value="closed">
-			Closed
-		</ion-segment-button>
-		</ion-segment>
-	</ion-toolbar>
-
-
 </ion-header>
 
 <ion-content>
-  <div [ngSwitch]="status">
+	<ion-toolbar no-border-top>
+		<ion-segment [(ngModel)]="status">
+			<ion-segment-button value="progress">
+				In Progress
+			</ion-segment-button>
+			<ion-segment-button value="pending">
+				Pending
+			</ion-segment-button>
+			<ion-segment-button value="closed">
+				Closed
+			</ion-segment-button>
+		</ion-segment>
+	</ion-toolbar>
+	<div [ngSwitch]="status">
 		<div *ngSwitchCase="'progress'">
 			<story-card [stories]="storiesInProgress" [config]="cardConfig" (rightClick)="navigateToDetails($event)" (leftClick)="progress($event)"></story-card>
 		</div>
@@ -42,6 +37,5 @@
 		<div *ngSwitchCase="'closed'">
 			<story-card [stories]="storiesClosed" [config]="cardConfig" (rightClick)="navigateToDetails($event)" (leftClick)="progress($event)"></story-card>
 		</div>
-  </div>
+	</div>
 </ion-content>
-
