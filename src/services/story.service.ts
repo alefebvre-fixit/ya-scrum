@@ -48,8 +48,6 @@ export class StoryService {
     return this.storyPriorities;
   }
 
-
-
   public findAllStories(): Observable<Story[]> {
     return this.database.list(STORIES);
   }
@@ -72,7 +70,6 @@ export class StoryService {
   }
 
   public update(story: Story) {
-    console.log("update " + story)
     this.database.object('/stories/' + story.$key).update(Story.getUpdate(story));
   }
 
@@ -103,64 +100,33 @@ export class StoryService {
     progress.daily = progress.daily + value;
     progress.total = progress.previous + progress.daily;
     progress.remaining = story.size - progress.total;
-
   }
-
-  public createProgress(story: Story, day: number) {
-
-    let result = new Progress();
-
-    result.day = day;
-    result.date = new Date();
-    result.previous = 0;
-    result.daily = 0;
-    result.total = 0;
-    result.remaining = story.size;
-
-    return result;
-
-  }
-
-  public getProgress(story: Story, day: number): Progress {
-    if (day > 0 && story.history && day <= story.history.length) {
-      return story.history[day - 1];
-    } else {
-      return undefined;
-    }
-  }
-
 
   public calculateProgress(story: Story) {
     console.log("calculateProgress=");
+    if (story.history) {
+      story.progress = story.history.reduce(function (sum: number, progress: Progress) {
+        progress.previous = sum;
+        progress.remaining = story.size - progress.previous - progress.daily;
+        return progress.previous + progress.daily;
+      }, 0);
 
-    let history = story.history;
-
-    story.progress = story.progress = history.reduce(function (sum: number, progress: Progress) {
-      progress.previous = sum;
-      progress.remaining = story.size - progress.previous - progress.daily;
-      return progress.previous + progress.daily;
-    }, 0);
-
-    if (story.progress > 0) {
-      if (story.progress >= story.size) {
-        story.status = "closed"
+      if (story.progress > 0) {
+        if (story.progress >= story.size) {
+          story.status = "closed"
+        } else {
+          story.status = "started"
+        }
       } else {
-        story.status = "started"
+        story.status = "assigned";
       }
-    } else {
-      story.status = "assigned";
-    }
-  }
 
+    }
+    console.log(story);
+  }
 
   public saveProgress(story: Story) {
-    this.calculateProgress(story);
     this.save(story);
   }
-
-
-
-
-
 
 }

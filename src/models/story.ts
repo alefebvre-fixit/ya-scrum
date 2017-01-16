@@ -1,46 +1,101 @@
-import { Progress } from './progress';
+import { StoryProgress } from './progress';
 
-export class Story{
-    
+export class Story {
+
     $key: string;
     name: string;
     status: string;
     type: string;
 
     description: string;
-    acceptanceCriterias : string;
+    acceptanceCriterias: string;
     comment: string;
     duration: number;
-    
+
     priority: number;
     estimate: number;
     size: number;
     sprintId: string;
 
-    progress:number;
+    progress: number;
 
-    history: Progress[];
-
+    history: StoryProgress[];
 
     public static getUpdate(story: any): any {
 
         const result = Object.assign({}, story);
-        delete(result.$key);
-        delete(result.$exists);
-        
+        delete (result.$key);
+        delete (result.$exists);
+        console.log("Object to save:");
+        console.log(result);
+
         return result;
     }
 
 
-    public static create(): Story{
-        let result : Story = new Story();
-        
+    public static create(): Story {
+        let result: Story = new Story();
+
         result.priority = 1;
         result.status = 'new';
         result.type = 'feature';
         result.size = 1;
         result.progress = 0;
-        
+
         return result;
     }
+
+    public static toMap(history: StoryProgress[]): Map<number, StoryProgress> {
+        let result: Map<number, StoryProgress> = new Map<number, StoryProgress>();
+
+        if (history) {
+            for (let progress of history) {
+                result.set(progress.day, progress);
+            }
+        }
+
+        return result;
+    }
+
+    public static getProgress(story: Story, day: number): StoryProgress {
+        console.log(story.history);
+        if (story.history) {
+            for (let progress of story.history) {
+                if (progress.day == day) {
+                    return progress;
+                }
+            }
+        }
+        return undefined;
+    }
+
+    public static createProgress(story: Story, day: number): StoryProgress {
+
+        let result = new StoryProgress();
+
+        result.storyId = story.$key;
+        result.day = day;
+        result.date = new Date();
+        result.previous = 0;
+        result.daily = 0;
+        result.total = 0;
+        result.remaining = story.size;
+
+        return result;
+
+    }
+
+    public static setProgress(story: Story, progress: StoryProgress) {
+
+        if (story.history == undefined) {
+            story.history = new Array<StoryProgress>();
+        }
+
+        //if (progress.day > 0 && progress.day <= story.history.length) {
+        if (progress.day > 0) {
+            story.history[progress.day - 1] = progress;
+        }
+
+    }
+
 }

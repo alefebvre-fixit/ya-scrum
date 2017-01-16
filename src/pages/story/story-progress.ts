@@ -5,7 +5,7 @@ import { ToastController } from 'ionic-angular';
 import { StoryService } from '../../services/index';
 import { SprintService } from '../../services/index';
 
-import { Story, Progress } from '../../models/index';
+import { Story, StoryProgress } from '../../models/index';
 
 @Component({
   selector: 'story-progress',
@@ -15,7 +15,7 @@ import { Story, Progress } from '../../models/index';
 export class StoryProgressPage {
 
   public story: Story;
-  public progress: Progress;
+  public progress: StoryProgress;
 
   public day: number = 1;
 
@@ -74,14 +74,15 @@ export class StoryProgressPage {
   }
 
   displayProgressForDay(day: number) {
-    let progress = this.storyService.getProgress(this.story, day);
+    let progress: StoryProgress = Story.getProgress(this.story, day);
 
     if (progress == undefined) {
-      progress = this.storyService.createProgress(this.story, day);
-      if (this.story.history == undefined) {
-        this.story.history = new Array<Progress>(this.story.duration);
-      }
-      this.story.history[progress.day - 1] = progress;
+      progress = Story.createProgress(this.story, day);
+      Story.setProgress(this.story, progress);
+
+      console.log("Applying progress to story");
+      console.log(this.story);
+      
       this.storyService.calculateProgress(this.story);
     }
 
@@ -105,13 +106,16 @@ export class StoryProgressPage {
 
   }
 
-  public updateChart(progress: Progress) {
+  public updateChart(progress: StoryProgress) {
     this.doughnutChartData = [progress.previous, progress.daily, progress.remaining];
   }
 
   apply(): void {
-    this.storyService.save(this.story);
 
+    this.storyService.calculateProgress(this.story);
+    this.storyService.saveProgress(this.story);
+
+    this.sprintService.updateSprintProgress(this.story);
 
     this.presentToast();
 
