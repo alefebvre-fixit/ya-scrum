@@ -64,6 +64,24 @@
 			</ion-col>
 		</ion-row>
 	</ion-grid>
+
+	<ion-list>
+		<ion-list-header>
+			Burndown Chart
+		</ion-list-header>
+	</ion-list>
+	<div>
+		<div style="display: block">
+    <canvas baseChart width="350" height="250"
+                [datasets]="lineChartData"
+                [labels]="lineChartLabels"
+                [options]="lineChartOptions"
+                [colors]="lineChartColors"
+                [legend]="lineChartLegend"
+                [chartType]="lineChartType"></canvas>
+		</div>
+	</div>
+
 	<ion-list>
 		<ion-list-header>
 			Sprint Backlog

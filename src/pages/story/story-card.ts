@@ -24,6 +24,10 @@ export class StoryCard {
   ) {
   }
 
+  trackStory(index, story: Story) {
+    return story ? story.$key : undefined;
+  }
+
   ngOnInit(): void {
   }
 

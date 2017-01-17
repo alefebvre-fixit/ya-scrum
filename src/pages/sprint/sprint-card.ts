@@ -24,6 +24,10 @@ export class SprintCard {
   ) {
   }
 
+  trackSprint(index, sprint: Sprint) {
+    return sprint ? sprint.$key : undefined;
+  }
+
   ngOnInit(): void {
   }
 

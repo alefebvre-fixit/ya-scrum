@@ -20,6 +20,7 @@ export class SprintProgress extends Progress {
 
 
     public static reset(progress: SprintProgress) {
+        console.log("reset(progress: SprintProgress)");
 
         progress.previous = 0;
         progress.daily = 0;
@@ -29,6 +30,7 @@ export class SprintProgress extends Progress {
     }
 
     public static setProgress(sprintProgress: SprintProgress, storyProgress: StoryProgress) {
+        console.log("setProgress(sprintProgress: SprintProgress, storyProgress: StoryProgress)");
 
         if (storyProgress.storyId == undefined) {
             console.log("Missing storyId on storyProgress" + storyProgress);

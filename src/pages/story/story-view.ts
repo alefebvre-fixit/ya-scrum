@@ -26,9 +26,13 @@ export class StoryViewPage {
   ngOnInit(): void {
     const storyId = this.params.get("id");
     this.storyService.findOne(storyId).subscribe(story => {
+      console.log("StoryViewPage:: assign story");
       this.story = story;
       if (story.sprintId){
-        this.sprintService.findOne(story.sprintId).subscribe(sprint => {this.sprint = sprint});
+        this.sprintService.findOne(story.sprintId).subscribe(sprint => {
+          console.log("StoryViewPage:: assign sprint");
+          this.sprint = sprint
+        });
       }
     });
   }

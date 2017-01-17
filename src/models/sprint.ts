@@ -4,7 +4,6 @@ import { SprintProgress } from './progress';
 export class Sprint {
 
     $key: string;
-    id: number;
     code: string;
     name: string;
     status: string;

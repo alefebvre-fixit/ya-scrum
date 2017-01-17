@@ -26,6 +26,15 @@ export class SprintService {
 
           sprint.filter_status = Sprint.getFilterStatus(sprint.status);
           this.save(sprint);
+
+          this.findStoryBySprint(sprint.$key).subscribe((stories: Story[]) => {
+            
+            sprint.size = stories.reduce(function (sum: number, story: Story) {
+              return story.size;
+            }, 0);
+            this.database.object('/sprints/' + sprint.$key).update({ size: sprint.size });
+          });
+
         }
     });
   }
@@ -58,7 +67,7 @@ export class SprintService {
   }
 
   public assignToSprint(sprintId: string, storyId: string) {
-    console.log("assignToSprint sprintId = " + sprintId + " storyId=" + storyId);
+    console.log("assignToSprint(sprintId: string, storyId: string)");
 
     this.findOne(sprintId).take(1).subscribe(sprint => {
       this.findOneStory(storyId).take(1).subscribe(story => {
@@ -81,6 +90,7 @@ export class SprintService {
   }
 
   public findOne(sprintKey: string): Observable<Sprint> {
+    console.log("findOne(sprintKey: string): Observable<Sprint>");
     return this.database.object('/sprints/' + sprintKey);
   }
 
@@ -93,22 +103,20 @@ export class SprintService {
   }
 
   public create(sprint: Sprint) {
-    sprint.filter_status = Sprint.getFilterStatus(sprint.status);
+    console.log("create(sprint: Sprint)");
 
-    console.log("create sprint " + sprint)
-    
+    sprint.filter_status = Sprint.getFilterStatus(sprint.status);
     this.database.list(SPRINTS).push(sprint);
   }
 
   public update(sprint: Sprint) {
-    sprint.filter_status = Sprint.getFilterStatus(sprint.status);
-
-    console.log("update " + sprint)
-    
+    console.log("update(sprint: Sprint)");
+    sprint.filter_status = Sprint.getFilterStatus(sprint.status);    
     this.database.object('/sprints/' + sprint.$key).update(Sprint.getUpdate(sprint));
   }
 
   public updateSprintProgress(story: Story) {
+    console.log("updateSprintProgress(story: Story)");
 
     this.findOne(story.sprintId).take(1).subscribe(sprint => {
 
@@ -131,12 +139,7 @@ export class SprintService {
         let stories = sprintProgress.storiesProgress;
 
         if (stories != undefined) {
-          console.log("Before reset Progress");
-          console.log(sprint);
-
           SprintProgress.reset(sprintProgress);
-          console.log("After reset Progress");
-          console.log(sprint);
           for (let story of stories) {
             sprintProgress.daily += story.daily;
             sprintProgress.previous += story.previous;
@@ -145,15 +148,8 @@ export class SprintService {
           }
         }
       }
-      console.log("Before Calculate Overall Progress");
-      console.log(sprint);
-
       //finaly calculate the overall progress
       this.calculateProgress(sprint);
-      console.log("After Calculate Overall Progress");
-      console.log(sprint);
-      console.log("Before Saving");
-
       this.database.object('/sprints/' + sprint.$key).update({ status: sprint.status, 
         filter_status: Sprint.getFilterStatus(sprint.status), 
         progress: sprint.progress, 
@@ -164,11 +160,9 @@ export class SprintService {
   }
 
   public calculateProgress(sprint: Sprint) {
+    console.log("calculateProgress(sprint: Sprint)");
     if (sprint.history) {
       //TODO Do a sort first
-      console.log("calculateProgress(sprint: Sprint)");
-      console.log(sprint);
-
       sprint.progress = sprint.history.reduce(function (sum: number, progress: SprintProgress) {
         return progress.total;
       }, 0);
@@ -183,6 +177,52 @@ export class SprintService {
         sprint.status = "new";
       }
     }
+  }
+
+
+  public generateBurndowData(sprint: Sprint): any{
+    let result = {labels: [], datas: []}
+
+    result.labels = this.generateLabels(sprint);
+    result.datas[0] = this.generateIdealCurve(sprint);
+    result.datas[1] = this.generateActualCurve(sprint);
+
+    return result;
+  }
+
+  private generateActualCurve(sprint: Sprint): any{
+    let result = { data: [], label: 'Actual' };
+
+    for (let day = 1; day <= sprint.duration; day++) {
+      let progress: SprintProgress = Sprint.getProgress(sprint, day);
+      if (progress != undefined){
+        result.data[day-1] = progress.remaining;
+      }
+    }
+
+    return result;
+  }
+
+  private generateIdealCurve(sprint: Sprint): any{
+
+    let result = { data: [], label: 'Ideal' };
+
+    for (let day = 1; day <= sprint.duration; day++) {
+      let remaining = sprint.size - ((sprint.size * day)/ sprint.duration);
+      result.data[day-1] = remaining;
+    }
+
+    return result;
+  }
+
+  private generateLabels(sprint: Sprint): Array<string>{
+    let result: Array<string> = new Array<string>();
+    
+    for (let day = 1; day <= sprint.duration; day++) { 
+      result.push(day.toString());
+    }
+
+    return result;
   }
 
 
