@@ -4,6 +4,7 @@ export class User {
     name: string;
     email: string;
     role: string;
+    team: string;
 
     public static getUpdate(user: any): any {
 
