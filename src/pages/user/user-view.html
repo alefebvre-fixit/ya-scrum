@@ -1,0 +1,28 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>
+            {{(user)?.name}}
+		</ion-title>
+	<ion-buttons end>
+		<button ion-button (click)="presentPopover($event)">
+			<ion-icon name="more"></ion-icon>
+		</button>
+    </ion-buttons>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<div class="sprint-module">
+		<img src="assets/img/themes/blueprint-large.jpg" class="image-overlay" />
+		<header>
+			<h3>
+                {{(user)?.name}}
+			</h3>
+			<h5>
+				@{{(user)?.team}}
+			</h5>
+		</header>
+		<ion-icon name="cog" class="story-icon"></ion-icon>
+	</div>
+
+</ion-content>

@@ -1,5 +1,3 @@
-
-
 export class User {
 
     $key: string;
@@ -13,6 +11,11 @@ export class User {
         delete (result.$key);
         delete (result.$exists);
 
+        return result;
+    }
+
+    public static create(): User {
+        let result: User = new User();
         return result;
     }
 
