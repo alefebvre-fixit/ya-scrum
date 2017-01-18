@@ -8,7 +8,7 @@ import { User } from '../../models/index';
   templateUrl: 'User-edit.html',
   viewProviders: [],
 })
-export class StoryEditPage {
+export class UserEditPage {
 
   public user: User;
 

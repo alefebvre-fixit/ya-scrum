@@ -5,14 +5,13 @@ import { UserEditPage } from './user-edit';
 import { User } from '../../models/index';
 import { UserService } from '../../services/index';
 import { ToastController } from 'ionic-angular';
-import { UserProgressPage } from './user-progress';
 
 @Component({
   template: `
     <ion-list>
       <ion-list-header>User</ion-list-header>
       <button ion-item (click)="edit()">Edit</button>
-      <button ion-item (click)="delete()">Un-Assign</button>
+      <button ion-item (click)="delete()">Delete</button>
       <button ion-item (click)="close()">Close</button>
 
     </ion-list>
@@ -49,14 +48,6 @@ export class UserPopoverPage {
       let editModal = this.modalCtrl.create(UserEditPage, { userId: this.user.$key });
       this.close();
       editModal.present();
-    }
-  }
-
-  progress() {
-    if (this.user) {
-      let progressModal = this.modalCtrl.create(UserProgressPage, { userId: this.user.$key });
-      this.close();
-      progressModal.present();
     }
   }
 

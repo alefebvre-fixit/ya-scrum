@@ -26,9 +26,15 @@ import { SprintConversationPage } from '../pages/sprint/sprint-conversation';
 import { SprintPopoverPage } from '../pages/sprint/sprint-popover';
 import { SprintCard } from '../pages/sprint/sprint-card';
 
-
 import { StorySelectorPage } from '../pages/sprint/story-selector';
 
+
+import { UserListPage } from '../pages/user/user-list';
+import { UserEditPage } from '../pages/user/user-edit';
+import { UserViewPage } from '../pages/user/user-view';
+import { UserPopoverPage } from '../pages/user/user-popover';
+
+import { UserService } from '../services/index';
 import { SprintService } from '../services/index';
 import { StoryService } from '../services/index';
 import { YaAvatar } from '../common/ya-avatar';
@@ -65,6 +71,11 @@ export const firebaseConfig = {
     SprintPopoverPage,
     SprintCard,
 
+    UserListPage,
+    UserEditPage,
+    UserViewPage,
+    UserPopoverPage,
+
     YaAvatar,
 
 
@@ -97,11 +108,16 @@ export const firebaseConfig = {
     SprintPopoverPage,
     SprintCard,
 
+    UserListPage,
+    UserEditPage,
+    UserViewPage,
+    UserPopoverPage,
+
     YaAvatar,
 
 
     TabsPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, SprintService, StoryService]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, SprintService, StoryService, UserService]
 })
 export class AppModule {}
