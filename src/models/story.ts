@@ -15,7 +15,9 @@ export class Story {
     priority: number;
     estimate: number;
     size: number;
+
     sprintId: string;
+    productOwnerId: string;
 
     progress: number;
 

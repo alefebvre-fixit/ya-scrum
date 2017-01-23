@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ViewController } from 'ionic-angular';
 import { ModalController, NavParams } from 'ionic-angular';
 import { StorySelectorPage } from './story-selector';
+import { ScrumMasterSelectorPage } from '../user/scrum-master-selector';
+
 import { SprintEditPage } from './sprint-edit';
 
 import { Sprint } from '../../models/index';
@@ -12,6 +14,8 @@ import { Sprint } from '../../models/index';
       <ion-list-header>Sprint</ion-list-header>
       <button ion-item (click)="edit()">Edit</button>
       <button ion-item (click)="assignStory()">Assign Story</button>
+      <button ion-item (click)="assignScrumMaster()">Assign Srum Master</button>
+
       <button ion-item (click)="close()">Close</button>
     </ion-list>
   `
@@ -39,11 +43,23 @@ export class SprintPopoverPage {
   assignStory() {
 
     let sprint: Sprint = this.params.get("sprint");
-    console.log(sprint);
-
     
     if (sprint) {
       let selectorModal = this.modalCtrl.create(StorySelectorPage, { sprintId: sprint.$key });
+      this.close();
+      selectorModal.present();
+    } else {
+      this.close();
+    }
+
+  }
+
+  assignScrumMaster() {
+
+    let sprint: Sprint = this.params.get("sprint");
+
+    if (sprint) {
+      let selectorModal = this.modalCtrl.create(ScrumMasterSelectorPage, { sprintId: sprint.$key });
       this.close();
       selectorModal.present();
     } else {

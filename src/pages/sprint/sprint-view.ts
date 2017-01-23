@@ -3,12 +3,12 @@ import { Component } from '@angular/core';
 import { NavParams, ViewController, PopoverController } from 'ionic-angular';
 import { ModalController, NavController } from 'ionic-angular';
 
-import { SprintService, StoryService } from '../../services/index';
-import { Sprint, Story } from '../../models/index';
-import { SprintConversationPage } from './sprint-conversation';
+import { SprintService, StoryService, UserService } from '../../services/index';
+import { Sprint, Story, User } from '../../models/index';
 import { SprintPopoverPage } from './sprint-popover';
 import { StoryViewPage } from '../story/story-view';
-
+import { ScrumMasterSelectorPage } from '../user/scrum-master-selector';
+import { UserViewPage } from '../user/user-view';
 
 @Component({
   selector: 'sprint-view',
@@ -18,6 +18,7 @@ export class SprintViewPage {
 
   public sprint: Sprint;
   public stories: Story[];
+  public scrumMaster: User;
   public cardConfig = { right: "details" };
 
   constructor(
@@ -27,6 +28,7 @@ export class SprintViewPage {
     public navCtrl: NavController,
     public sprintService: SprintService,
     public storyService: StoryService,
+    public userService: UserService,
 
     public popoverCtrl: PopoverController
   ) {
@@ -38,10 +40,19 @@ export class SprintViewPage {
 
     this.sprintService.findOne(sprintId).subscribe(sprint => {
       this.sprint = sprint;
+      console.log(sprint);
+      if (sprint.scrumMasterId) {
+        this.userService.findOne(sprint.scrumMasterId).subscribe(user => {
+          this.scrumMaster = user;
+          console.log(this.scrumMaster);
+        });
+      }
+
       let burndown = this.sprintService.generateBurndowData(sprint);
       this.lineChartData = burndown.datas;
       this.lineChartLabels = burndown.labels;
-      
+
+
     });
 
     this.sprintService.findStoryBySprint(sprintId).subscribe((stories: Story[]) => {
@@ -57,7 +68,23 @@ export class SprintViewPage {
     });
   }
 
-  navigateToDetails(story: Story) {
+  assignScrumMaster() {
+    let selectorModal = this.modalCtrl.create(ScrumMasterSelectorPage, { sprintId: this.sprint.$key });
+    selectorModal.present();
+
+  }
+
+  navigateTocrumMaster(user: User) {
+    // push another page on to the navigation stack
+    // causing the nav controller to transition to the new page
+    // optional data can also be passed to the pushed page.
+    this.navCtrl.push(UserViewPage, {
+      id: user.$key
+    });
+  }
+
+
+  public navigateToDetails(story: Story) {
     // push another page on to the navigation stack
     // causing the nav controller to transition to the new page
     // optional data can also be passed to the pushed page.

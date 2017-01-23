@@ -56,20 +56,32 @@
 				{{(sprint)?.description}}
 			</ion-col>
 		</ion-row>
-		<ion-row>
-			<ion-col class="contributors">
-				<ya-avatar [username]="'b'"></ya-avatar>
-				<ya-avatar [username]="'f'"></ya-avatar>
-				<ya-avatar [username]="'n'"></ya-avatar>
-			</ion-col>
-		</ion-row>
 	</ion-grid>
 
-	<ion-list>
+
+	<ion-list no-border>
+		<ion-item (click)="navigateTocrumMaster(scrumMaster)" *ngIf="scrumMaster">
+			<ion-avatar item-left>
+				<ya-avatar [username]="scrumMaster?.name"></ya-avatar>
+			</ion-avatar>
+			<h2>{{scrumMaster?.name}}</h2>
+			<p>Scrum Master</p>
+		</ion-item>
+		<ion-item (click)="assignScrumMaster()" *ngIf="!scrumMaster">
+			<ion-avatar item-left>
+				<ya-avatar [username]="'?'"></ya-avatar>
+			</ion-avatar>
+			<h2>Scrum Master</h2>
+			<p>Please select a scrum master</p>
+		</ion-item>
+	</ion-list>
+
+	<ion-list no-border>
 		<ion-list-header>
 			Burndown Chart
 		</ion-list-header>
 	</ion-list>
+
 	<div>
 		<div style="display: block">
     <canvas baseChart width="350" height="250"

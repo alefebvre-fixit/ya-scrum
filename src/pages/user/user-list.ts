@@ -42,5 +42,9 @@ export class UserListPage {
     });
   }
 
+  trackUser(index, user: User) {
+    return user ? user.$key : undefined;
+  }
+
 
 }

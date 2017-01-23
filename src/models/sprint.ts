@@ -15,6 +15,7 @@ export class Sprint {
     size: number = 0;
 
     conversationId: string;
+    scrumMasterId: string;
 
     progress: number;
 

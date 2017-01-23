@@ -40,7 +40,7 @@ export class UserEditPage {
     this.viewCtrl.dismiss();
   }
 
-  create(): void {
+  save(): void {
     this.userService.save(this.user);
     this.viewCtrl.dismiss();
   }

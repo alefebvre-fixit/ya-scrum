@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-toolbar>
 		<ion-title>
-			Select Story
+			Select Scrum Master
 		</ion-title>
 		<ion-buttons start>
 			<button ion-button (click)="close()">
@@ -14,6 +14,15 @@
 
 <ion-content>
 
-	<story-card [stories]="stories" [config]="cardConfig" (rightClick)="assignToSprint($event)" ></story-card>
+	<ion-list>
+		<ion-item *ngFor="let user of users;trackBy: trackUser" (click)="select(user)">
+			<ion-avatar item-left>
+				<ya-avatar [username]="user.name"></ya-avatar>
+			</ion-avatar>
+			<h2>{{user.name}}</h2>
+			<p>{{user.role}}@{{user.team}}</p>
+		</ion-item>
+	</ion-list>
+
 
 </ion-content>

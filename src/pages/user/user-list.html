@@ -16,12 +16,12 @@
 <ion-content>
 
 	<ion-list>
-		<ion-item>
+		<ion-item *ngFor="let user of users;trackBy: trackUser" (click)="navigateToDetails(user)">
 			<ion-avatar item-left>
-				<img src="img/avatar-cher.png">
+				<ya-avatar [username]="user.name"></ya-avatar>
 			</ion-avatar>
-			<h2>Cher</h2>
-			<p>Ugh. As if.</p>
+			<h2>{{user.name}}</h2>
+			<p>{{user.role}}@{{user.team}}</p>
 		</ion-item>
 	</ion-list>
 

@@ -89,6 +89,11 @@ export class SprintService {
     });
   }
 
+  public assignScrumMaster(sprintId: string, userId: string) {
+    console.log("assignScrumMaster(sprintId: string, userId: string)");
+    this.database.object('/sprints/' + sprintId).update({ scrumMasterId: userId});
+  }
+
   public findOne(sprintKey: string): Observable<Sprint> {
     console.log("findOne(sprintKey: string): Observable<Sprint>");
     return this.database.object('/sprints/' + sprintKey);
