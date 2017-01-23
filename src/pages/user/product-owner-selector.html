@@ -1,0 +1,28 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-title>
+			Select Product Owner
+		</ion-title>
+		<ion-buttons start>
+			<button ion-button (click)="close()">
+        		<span color="primary" showWhen="ios">Cancel</span>
+        		<ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      		</button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+	<ion-list>
+		<ion-item *ngFor="let user of users;trackBy: trackUser" (click)="select(user)">
+			<ion-avatar item-left>
+				<ya-avatar [username]="user.name"></ya-avatar>
+			</ion-avatar>
+			<h2>{{user.name}}</h2>
+			<p>{{user.role}}@{{user.team}}</p>
+		</ion-item>
+	</ion-list>
+
+
+</ion-content>

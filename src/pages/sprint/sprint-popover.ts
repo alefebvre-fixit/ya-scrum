@@ -55,9 +55,7 @@ export class SprintPopoverPage {
   }
 
   assignScrumMaster() {
-
     let sprint: Sprint = this.params.get("sprint");
-
     if (sprint) {
       let selectorModal = this.modalCtrl.create(ScrumMasterSelectorPage, { sprintId: sprint.$key });
       this.close();
@@ -65,7 +63,6 @@ export class SprintPopoverPage {
     } else {
       this.close();
     }
-
   }
 
 }

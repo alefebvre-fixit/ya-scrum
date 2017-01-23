@@ -160,4 +160,8 @@ export class StoryService {
     this.save(story);
   }
 
+  public assignProductOwner(storyId: string, userId: string) {
+    this.database.object(`/stories/${storyId}`).update({ productOwnerId: userId});
+  }
+
 }

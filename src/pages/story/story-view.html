@@ -66,4 +66,22 @@
 
 	</ion-grid>
 
+	<ion-list no-border>
+		<ion-item (click)="navigateToProductOwner(productOwner)" *ngIf="productOwner">
+			<ion-avatar item-left>
+				<ya-avatar [username]="productOwner?.name"></ya-avatar>
+			</ion-avatar>
+			<h2>{{productOwner?.name}}</h2>
+			<p>Product Owner</p>
+		</ion-item>
+		<ion-item (click)="assignProductOwner()" *ngIf="!productOwner">
+			<ion-avatar item-left>
+				<ya-avatar [username]="'?'"></ya-avatar>
+			</ion-avatar>
+			<h2>Product Owner</h2>
+			<p>Please select a product owner</p>
+		</ion-item>
+	</ion-list>
+
+
 </ion-content>

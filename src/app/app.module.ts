@@ -34,6 +34,7 @@ import { UserEditPage } from '../pages/user/user-edit';
 import { UserViewPage } from '../pages/user/user-view';
 import { UserPopoverPage } from '../pages/user/user-popover';
 import { ScrumMasterSelectorPage } from '../pages/user/scrum-master-selector';
+import { ProductOwnerSelectorPage } from '../pages/user/product-owner-selector';
 
 import { UserService } from '../services/index';
 import { SprintService } from '../services/index';
@@ -77,6 +78,7 @@ export const firebaseConfig = {
     UserViewPage,
     UserPopoverPage,
     ScrumMasterSelectorPage,
+    ProductOwnerSelectorPage,
 
     YaAvatar,
 
@@ -115,9 +117,9 @@ export const firebaseConfig = {
     UserViewPage,
     UserPopoverPage,
     ScrumMasterSelectorPage,
+    ProductOwnerSelectorPage,
 
     YaAvatar,
-
 
     TabsPage
   ],

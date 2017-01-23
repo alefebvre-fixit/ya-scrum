@@ -40,11 +40,9 @@ export class SprintViewPage {
 
     this.sprintService.findOne(sprintId).subscribe(sprint => {
       this.sprint = sprint;
-      console.log(sprint);
       if (sprint.scrumMasterId) {
         this.userService.findOne(sprint.scrumMasterId).subscribe(user => {
           this.scrumMaster = user;
-          console.log(this.scrumMaster);
         });
       }
 
@@ -71,7 +69,6 @@ export class SprintViewPage {
   assignScrumMaster() {
     let selectorModal = this.modalCtrl.create(ScrumMasterSelectorPage, { sprintId: this.sprint.$key });
     selectorModal.present();
-
   }
 
   navigateTocrumMaster(user: User) {
