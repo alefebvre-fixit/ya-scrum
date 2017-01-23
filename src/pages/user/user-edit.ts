@@ -53,4 +53,8 @@ export class UserEditPage {
     }
   }
 
+  close() {
+    this.viewCtrl.dismiss();
+  }
+
 }
