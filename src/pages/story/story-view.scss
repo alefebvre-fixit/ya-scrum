@@ -5,20 +5,44 @@
   color: white;
   padding: 4px 8px 4px 8px;
   border: 1px solid white ;
-  bottom: 30px;
+  bottom: 80px;
   right: 9px;
   border-radius: 5px;
 }
 
 .story-progress{
   position: absolute;
-  bottom: 10px;
+  bottom: 60px;
   width: 95%;
   left:0;
   right:0;
   margin-left:auto;
   margin-right:auto;
   border-radius: 5px;
+}
+
+.story-statistics{
+    position: absolute;
+    bottom: 2px;
+    width: 95%;
+    left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.story-statistic{
+  margin: 0;
+  color: white;
+  text-align: center;
+  text-decoration: none !important;
+}
+
+.story-statistic-label{
+  margin: 0;
+  text-align: center;
+  text-decoration: none !important;
+  color: #ccc;
 }
 
 .progress {
@@ -41,6 +65,12 @@ progress[value]::-webkit-progress-bar {
   background: white;
 }
 
+.story-text{
+  padding: 13px 16px 13px 16px;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  display: block;
+}
 
 
 

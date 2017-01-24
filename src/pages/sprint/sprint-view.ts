@@ -39,9 +39,13 @@ export class SprintViewPage {
     const sprintId = this.params.get("id");
 
     this.sprintService.findOne(sprintId).subscribe(sprint => {
+
+      console.log('SprintViewPage::this.sprintService.findOne(sprintId).subscribe');
+
       this.sprint = sprint;
       if (sprint.scrumMasterId) {
         this.userService.findOne(sprint.scrumMasterId).subscribe(user => {
+          console.log('SprintViewPage::this.userService.findOne(sprint.scrumMasterId).subscribe');
           this.scrumMaster = user;
         });
       }
@@ -50,10 +54,10 @@ export class SprintViewPage {
       this.lineChartData = burndown.datas;
       this.lineChartLabels = burndown.labels;
 
-
     });
 
     this.sprintService.findStoryBySprint(sprintId).subscribe((stories: Story[]) => {
+      console.log('this.sprintService.findStoryBySprint(sprintId).subscribe');
       this.stories = stories;
     });
 

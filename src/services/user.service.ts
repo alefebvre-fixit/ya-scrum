@@ -54,4 +54,24 @@ export class UserService {
     this.database.object('/users/' + user.$key).update(User.getUpdate(user));
   }
 
+
+  public filterUsers(searchTerm: string, users: User[]) {
+    if (users) {
+      if (this.isEmpty(searchTerm) || this.isBlank(searchTerm)) {
+        return users;
+      }
+      return users.filter((user) => {
+        return user.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
+      });
+    }
+  }
+
+  private isEmpty(str) {
+    return (!str || 0 === str.length);
+  }
+
+  private isBlank(str: string) {
+    return (!str || /^\s*$/.test(str));
+  }
+
 }

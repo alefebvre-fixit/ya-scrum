@@ -12,7 +12,9 @@ import { User } from '../../models/index';
 })
 export class ProductOwnerSelectorPage {
 
+  public searchTerm: string = '';
   public users: User[];
+  public filteredUsers: User[];
   public storyId: string;
 
   constructor(
@@ -26,6 +28,7 @@ export class ProductOwnerSelectorPage {
   public ngOnInit(): void {
     this.userService.findAll().subscribe((users: User[]) => {
       this.users = users;
+      this.filteredUsers = this.userService.filterUsers(this.searchTerm, users);
     });
     this.storyId = this.params.get("storyId");
   }
@@ -34,13 +37,17 @@ export class ProductOwnerSelectorPage {
     this.viewCtrl.dismiss();
   }
 
-  public select(user: User){
+  public select(user: User) {
     this.close();
     this.storyService.assignProductOwner(this.storyId, user.$key);
   }
 
   public trackUser(index, user: User) {
     return user ? user.$key : undefined;
+  }
+
+  public setFilteredItems(even: any) {
+    this.filteredUsers = this.userService.filterUsers(this.searchTerm, this.users);
   }
 
 

@@ -12,7 +12,9 @@ import { User } from '../../models/index';
 })
 export class ScrumMasterSelectorPage {
 
+  public searchTerm: string = '';
   public users: User[];
+  public filteredUsers: User[];
   public sprintId: string;
 
   constructor(
@@ -26,6 +28,7 @@ export class ScrumMasterSelectorPage {
   public ngOnInit(): void {
     this.userService.findAll().subscribe((users: User[]) => {
       this.users = users;
+      this.filteredUsers = this.userService.filterUsers(this.searchTerm, users);
     });
     this.sprintId = this.params.get("sprintId");
   }
@@ -41,6 +44,10 @@ export class ScrumMasterSelectorPage {
 
   public trackUser(index, user: User) {
     return user ? user.$key : undefined;
+  }
+
+  public setFilteredItems(even: any) {
+    this.filteredUsers = this.userService.filterUsers(this.searchTerm, this.users);
   }
 
 

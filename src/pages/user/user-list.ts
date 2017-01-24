@@ -13,8 +13,10 @@ import { UserViewPage } from './user-view';
 })
 export class UserListPage {
 
+  public searchTerm: string = '';
   public users: User[];
-  
+  public filteredUsers: User[];
+
   constructor(
     public navCtrl: NavController,
     public modalCtrl: ModalController,
@@ -25,6 +27,7 @@ export class UserListPage {
   ngOnInit(): void {
     this.userService.findAll().subscribe((users: User[]) => {
       this.users = users;
+      this.filteredUsers = this.userService.filterUsers(this.searchTerm, users);
     });
   }
 
@@ -42,8 +45,12 @@ export class UserListPage {
     });
   }
 
-  trackUser(index, user: User) {
+  public trackUser(index, user: User) {
     return user ? user.$key : undefined;
+  }
+
+  public setFilteredItems(even: any) {
+    this.filteredUsers = this.userService.filterUsers(this.searchTerm, this.users);
   }
 
 

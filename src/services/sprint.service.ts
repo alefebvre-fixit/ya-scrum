@@ -187,7 +187,7 @@ export class SprintService {
 
   public generateBurndowData(sprint: Sprint): any{
     let result = {labels: [], datas: []}
-
+    console.log('SprintService::generateBurndowData(sprint: Sprint)');
     result.labels = this.generateLabels(sprint);
     result.datas[0] = this.generateIdealCurve(sprint);
     result.datas[1] = this.generateActualCurve(sprint);

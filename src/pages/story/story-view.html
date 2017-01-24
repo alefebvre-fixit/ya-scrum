@@ -1,13 +1,13 @@
 <ion-header>
 	<ion-navbar>
 		<ion-title>
-            {{(story)?.name}}
+			{{(story)?.name}}
 		</ion-title>
-	<ion-buttons end>
-		<button ion-button (click)="presentPopover($event)">
+		<ion-buttons end>
+			<button ion-button (click)="presentPopover($event)">
 			<ion-icon name="more"></ion-icon>
 		</button>
-    </ion-buttons>
+		</ion-buttons>
 	</ion-navbar>
 </ion-header>
 
@@ -16,7 +16,7 @@
 		<img src="assets/img/themes/blueprint-large.jpg" class="image-overlay" />
 		<header>
 			<h3>
-                {{(story)?.name}}
+				{{(story)?.name}}
 			</h3>
 			<h5 [hidden]="!sprint">
 				@{{(sprint)?.name}}
@@ -31,41 +31,31 @@
 		</div>
 		<progress value="{{(story)?.progress}}" max="{{(story)?.size}}" class="story-progress"></progress>
 
+
+		<ion-grid class="story-statistics">
+			<ion-row>
+				<ion-col width-33>
+					<p class="story-statistic">
+						<b>{{story?.priority}}</b>
+						<br>
+						<p class="story-statistic-label">Priority</p>
+				</ion-col>
+				<ion-col width-33>
+					<p class="story-statistic">
+						<b>{{story?.size}}</b>
+						<br>
+						<p class="story-statistic-label">Size</p>
+				</ion-col>
+				<ion-col width-33>
+					<p class="story-statistic">
+						<b>12</b>
+						<br>
+						<p class="story-statistic-label">Comments</p>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+
 	</div>
-	<ion-grid>
-		<ion-row>
-			<ion-col width-33 style="background-color: white">
-				<p class="statistic">
-					<b>{{story?.priority}}</b>
-					<br>
-					<p class="statistic-label">Priority</p>
-			</ion-col>
-			<ion-col width-33>
-				<p class="statistic">
-					<b>{{story?.size}}</b>
-					<br>
-					<p class="statistic-label">Size</p>
-			</ion-col>
-			<ion-col width-33>
-				<p class="statistic">
-					<b>12</b>
-					<br>
-					<p class="statistic-label">Comments</p>
-			</ion-col>
-		</ion-row>
-		<ion-row>
-			<ion-col>
-                {{(story)?.description}}
-			</ion-col>
-		</ion-row>
-		<ion-row>
-			<ion-col>
-                {{(story)?.comment}}
-			</ion-col>
-		</ion-row>
-
-	</ion-grid>
-
 	<ion-list no-border>
 		<ion-item (click)="navigateToProductOwner(productOwner)" *ngIf="productOwner">
 			<ion-avatar item-left>
@@ -83,5 +73,30 @@
 		</ion-item>
 	</ion-list>
 
+	<ion-list no-border>
+		<ion-list-header>
+			Description
+		</ion-list-header>
+	</ion-list>
+
+	<ion-grid>
+		<ion-row>
+			<ion-col class="story-text">
+				{{(story)?.description}}
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+	<ion-list no-border>
+		<ion-list-header>
+			Comment
+		</ion-list-header>
+	</ion-list>
+	<ion-grid>
+		<ion-row>
+			<ion-col class="story-text">
+				{{(story)?.comment}}
+			</ion-col>
+		</ion-row>
+	</ion-grid>
 
 </ion-content>
