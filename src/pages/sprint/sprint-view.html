@@ -52,11 +52,6 @@
 					<p class="statistic-label">Followers</p>
 			</ion-col>
 		</ion-row>
-		<ion-row>
-			<ion-col>
-				{{(sprint)?.description}}
-			</ion-col>
-		</ion-row>
 	</ion-grid>
 
 
@@ -76,6 +71,20 @@
 			<p>Please select a scrum master</p>
 		</ion-item>
 	</ion-list>
+
+	<ion-list no-border>
+		<ion-list-header>
+			Description
+		</ion-list-header>
+	</ion-list>
+	<ion-grid>
+		<ion-row>
+			<ion-col class="story-text">
+				{{(sprint)?.description}}
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+
 
 	<ion-list no-border>
 		<ion-list-header>
