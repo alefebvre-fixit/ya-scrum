@@ -37,6 +37,23 @@
 	</div>
 
 
+
+	<ion-toolbar no-border-top>
+		<ion-segment [(ngModel)]="status">
+			<ion-segment-button value="backlog">
+				Sprint Backlog
+			</ion-segment-button>
+			<ion-segment-button value="burndown">
+				BurnDown
+			</ion-segment-button>
+			<ion-segment-button value="retrospective">
+				Retrospective
+			</ion-segment-button>
+		</ion-segment>
+	</ion-toolbar>
+
+
+	<div [ngSwitch]="status">
 		<ion-grid>
 		<ion-row>
 			<ion-col width-33 style="background-color: white">
@@ -47,18 +64,19 @@
 				</ion-col>
 				<ion-col width-33>
 					<p class="statistic">
-						<b>{{(sprint)?.size}}</b>
+						<b>4</b>
 						<br>
-						<p class="statistic-label">Size</p>
+						<p class="statistic-label">Contributors</p>
 				</ion-col>
 				<ion-col width-33>
 					<p class="statistic">
-						<b>{{(sprint)?.capacity}}</b>
+						<b>12</b>
 						<br>
-						<p class="statistic-label">Capacity</p>
+						<p class="statistic-label">Followers</p>
 			</ion-col>
 		</ion-row>
-		</ion-grid>
+	</ion-grid>
+		<div *ngSwitchCase="'backlog'">
 			<ion-list no-border>
 				<ion-item (click)="navigateTocrumMaster(scrumMaster)" *ngIf="scrumMaster">
 					<ion-avatar item-left>
@@ -75,27 +93,22 @@
 					<p>Please select a scrum master</p>
 				</ion-item>
 			</ion-list>
-			<ion-list no-border>
-				<ion-list-header>
-					Burn Down Chart
-				</ion-list-header>
-			</ion-list>
-			<ion-grid>
-				<ion-row>
+			<story-card [stories]="stories" [config]="cardConfig" (rightClick)="navigateToDetails($event)"></story-card>
+
+
+		</div>
+		<div *ngSwitchCase="'burndown'">
+			<div style="display: block">
+				<!--
 				<canvas baseChart width="350" height="250" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
 					[colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
-				</ion-row>
-			</ion-grid>
-			<ion-list no-border>
-				<ion-list-header>
-					Sprint Backlog
-				</ion-list-header>
-			</ion-list>
-			<story-card [stories]="stories" [config]="cardConfig" (rightClick)="navigateToDetails($event)" (leftClick)="trackProgress($event)"></story-card>
-				
-
-					
-
+				-->	
+			</div>
+		</div>
+		<div *ngSwitchCase="'retrospective'">
+		retro
+		</div>
+</div>
 
 
 

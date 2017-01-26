@@ -30,6 +30,10 @@
 				<ion-textarea [(ngModel)]="sprint.description" #description="ngModel" name="description" id="description" required></ion-textarea>
 			</ion-item>
       <ion-item>
+        <ion-label floating>Capacity</ion-label>
+        <ion-input type="number" placeholder="Capacity" [(ngModel)]="sprint.capacity" #name="ngModel" name="capacity" id="capacity"></ion-input>
+      </ion-item>
+      <ion-item>
         <ion-label floating>Duration</ion-label>
         <ion-input type="number" placeholder="Duration" [(ngModel)]="sprint.duration" #name="ngModel" name="duration" id="duration"></ion-input>
       </ion-item>

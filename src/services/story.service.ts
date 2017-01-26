@@ -32,7 +32,7 @@ export class StoryService {
     { key: "2", value: "2" },
     { key: "3", value: "3" },
     { key: "4", value: "4" },
-    { key: "4", value: "5" },
+    { key: "5", value: "5" },
   ];
 
   public getStoryTypes(): any {
@@ -65,7 +65,11 @@ export class StoryService {
 
 
   public findAll(): Observable<Story[]> {
-    return this.database.list(STORIES);
+    return this.database.list(STORIES, {
+      query: {
+        orderByChild: 'priority'
+      }
+    });
   }
 
   public findByStatus(status: string): Observable<Story[]> {
@@ -74,6 +78,20 @@ export class StoryService {
         orderByChild: 'filter_status',
         equalTo: status
       }
+    });
+  }
+
+  public sortByPriority(stories: Story[]) {
+    return stories.sort((s1, s2) => {
+      if (s1.priority > s2.priority) {
+        return 1;
+      }
+
+      if (s1.priority < s2.priority) {
+        return -1;
+      }
+
+      return 0;
     });
   }
 
@@ -161,7 +179,7 @@ export class StoryService {
   }
 
   public assignProductOwner(storyId: string, userId: string) {
-    this.database.object(`/stories/${storyId}`).update({ productOwnerId: userId});
+    this.database.object(`/stories/${storyId}`).update({ productOwnerId: userId });
   }
 
 }

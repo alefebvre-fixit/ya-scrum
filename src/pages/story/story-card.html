@@ -14,7 +14,30 @@
 					#{{(story)?.type}}
 				</h5>
 			</header>
-			<ion-icon name="cog" class="story-icon"></ion-icon>
+
+			<div class="story-status-summary">
+				<div class="story-info">
+					{{(story)?.status}}
+				</div>
+				<div class="story-info">
+					{{(story)?.size}} points
+				</div>
+			</div>
+
+			<div class="story-size">
+				<p class="story-statistic">
+				<b>{{story?.size}}</b>
+				<br>
+				<p class="story-statistic-label">Points</p>
+			</div>
+
+			<div class="story-priority">
+				<p class="story-statistic">
+				<b>{{story?.priority}}</b>
+				<br>
+				<p class="story-statistic-label">Priority</p>
+			</div>
+
 			<div class="story-status">
 				{{(story)?.status}}
 			</div>

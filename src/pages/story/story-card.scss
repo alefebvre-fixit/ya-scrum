@@ -1,15 +1,58 @@
 .card-background-page {
     
+.story-status-summary {
+  display:flex;
+  position: absolute;
+  font-size: 100%;
+  padding: 0px 0px 0px 0px;
+  bottom: 80px;
+  right: 800px;
+}
+
+.story-info {
+  font-size: 100%;
+  color: white;
+  padding: 4px 8px 4px 8px;
+  border: 1px solid white ;
+  border-radius: 5px;
+  margin-left: 5px;
+}
+
 .story-status {
   position: absolute;
   font-size: 100%;
   color: white;
   padding: 4px 8px 4px 8px;
   border: 1px solid white ;
-  bottom: 80px;
+  border-radius: 5px;
+  width: 75px;
+  bottom: 75px;
+}
+
+.story-priority {
+  position: absolute;
+  font-size: 100%;
+  color: white;
+  padding: 4px 8px 4px 8px;
+  border: 1px solid white ;
+  top: 10px;
   right: 9px;
+  width: 75px;
   border-radius: 5px;
 }
+
+.story-size {
+  position: absolute;
+  font-size: 100%;
+  color: white;
+  padding: 4px 8px 4px 8px;
+  border: 1px solid white ;
+  top: 70px;
+  right: 9px;
+  width: 75px;
+  border-radius: 5px;
+}
+
 
 .story-progress{
   position: absolute;
@@ -42,6 +85,30 @@ progress[value]::-webkit-progress-bar {
   background: white;
 }
 
+.story-statistics{
+    position: absolute;
+    bottom: 38px;
+    width: 95%;
+    left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.story-statistic{
+  margin: 0;
+  color: white;
+  text-align: center;
+  text-decoration: none !important;
+}
+
+.story-statistic-label{
+  margin: 0;
+  text-align: center;
+  text-decoration: none !important;
+  color: #ccc;
+}
+
 
 
 
@@ -49,7 +116,7 @@ progress[value]::-webkit-progress-bar {
 .story-icon {
   position: absolute;
   top: 12px;
-  left: 15px;
+  left: 800px;
   font-size: 40px;
   color: white;
 }
@@ -61,7 +128,7 @@ progress[value]::-webkit-progress-bar {
 .story-card > header {
   position: absolute;
   top: 20px;
-  left: 60px;
+  left: 15px;
   width: 100%;
   text-align: left;
 }
@@ -69,13 +136,13 @@ progress[value]::-webkit-progress-bar {
   margin: 0;
   color: white;
   text-shadow: 0 1px 0 black;
-  font-size: 150%;
+  font-size: 170%;
 }
 .story-card > header > h5  {
   margin: 0;
   color: white;
   text-shadow: 0 1px 0 black;
-  font-size: 100%;
+  font-size: 110%;
 }
 
 .overlay {

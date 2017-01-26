@@ -19,7 +19,7 @@ export class StoryListPage {
   public storiesInProgress: Story[];
   public status: string = "progress";
   
-  public cardConfig = {right: "details", left:"progress"};
+  public cardConfig = {right: "details", left:"track progress"};
 
   constructor(
     public navCtrl: NavController,
@@ -30,15 +30,15 @@ export class StoryListPage {
 
   ngOnInit(): void {
     this.storyService.findByStatus("progress").subscribe((stories: Story[]) => {
-      this.storiesInProgress = stories;
+      this.storiesInProgress = this.storyService.sortByPriority(stories);
     });
 
     this.storyService.findByStatus("pending").subscribe((stories: Story[]) => {
-      this.storiesPending = stories;
+      this.storiesPending = this.storyService.sortByPriority(stories);
     });
 
     this.storyService.findByStatus("closed").subscribe((stories: Story[]) => {
-      this.storiesClosed = stories;
+      this.storiesClosed = this.storyService.sortByPriority(stories);
     });
 
   }

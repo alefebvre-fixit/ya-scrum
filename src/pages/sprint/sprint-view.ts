@@ -9,6 +9,7 @@ import { SprintPopoverPage } from './sprint-popover';
 import { StoryViewPage } from '../story/story-view';
 import { ScrumMasterSelectorPage } from '../user/scrum-master-selector';
 import { UserViewPage } from '../user/user-view';
+import { StoryProgressPage } from '../story/story-progress';
 
 @Component({
   selector: 'sprint-view',
@@ -19,8 +20,9 @@ export class SprintViewPage {
   public sprint: Sprint;
   public stories: Story[];
   public scrumMaster: User;
-  public cardConfig = { right: "details" };
-
+  public cardConfig = { left: "track progress", right: "details" };
+  public status = "backlog";
+  
   constructor(
     public params: NavParams,
     public viewCtrl: ViewController,
@@ -58,7 +60,7 @@ export class SprintViewPage {
 
     this.sprintService.findStoryBySprint(sprintId).subscribe((stories: Story[]) => {
       console.log('this.sprintService.findStoryBySprint(sprintId).subscribe');
-      this.stories = stories;
+      this.stories = this.storyService.sortByPriority(stories);
     });
 
   }
@@ -92,6 +94,14 @@ export class SprintViewPage {
     this.navCtrl.push(StoryViewPage, {
       id: story.$key
     });
+  }
+
+
+  public trackProgress(story: Story) {
+    if (story) {
+      let progressModal = this.modalCtrl.create(StoryProgressPage, { storyId: story.$key });
+      progressModal.present();
+    }
   }
 
   public lineChartData: Array<any> = [
