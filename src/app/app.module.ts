@@ -40,6 +40,7 @@ import { UserService } from '../services/index';
 import { SprintService } from '../services/index';
 import { StoryService } from '../services/index';
 import { YaAvatar } from '../common/ya-avatar';
+import {NgxChartsModule} from "@swimlane/ngx-charts";
 
 
 // YOUR SETTINGS GOES HERE!
@@ -89,6 +90,8 @@ export const firebaseConfig = {
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
     ChartsModule,
+    NgxChartsModule
+
   ],
   bootstrap: [IonicApp],
   entryComponents: [
